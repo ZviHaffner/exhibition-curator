@@ -11,6 +11,9 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      boxShadow: {
+        equal: "0px 1px 6px 0px rgba(32, 33, 36, 0.28)",
+      },
     },
   },
   plugins: [],
