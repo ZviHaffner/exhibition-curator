@@ -1,28 +1,37 @@
 import { search } from "@/chicago-api";
-import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 
-const SearchBar = ({ setArtworks, setLoading }) => {
-  const [searchInput, setSearchInput] = useState("");
-
+const SearchBar = ({
+  searchTerm,
+  setSearchTerm,
+  setArtworks,
+  setLoading,
+  setError,
+}) => {
   function handleSubmit(e) {
     e.preventDefault();
+    setError({});
     setLoading(true);
-    search(searchInput).then((res) => {
-      setArtworks(res.data);
-      setLoading(false);
-    });
+    search(searchTerm)
+      .then((res) => {
+        setArtworks(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false)
+        setError(err.response.data);
+      });
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="flex gap-5 my-5 p-1 bg-white border border-gray-300 rounded-full shadow-equal shadow-gray-400">
+      <div className="flex gap-5 my-5 p-1 bg-white border border-gray-300 rounded-full shadow-equal">
         <CiSearch className="text-3xl text-gray-500" />
         <input
           className="grow rounded-r-full focus:outline-none"
           type="search"
-          value={searchInput}
-          onChange={(event) => setSearchInput(event.target.value)}
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
           placeholder="Search Thousands of Artworks"
           required
         />
