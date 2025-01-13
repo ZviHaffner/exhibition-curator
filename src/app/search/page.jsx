@@ -12,7 +12,6 @@ const Search = () => {
   const [artworks, setArtworks] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
-  // console.log(artworks);
 
   return (
     <div className="w-2/3 mx-auto">
@@ -38,7 +37,7 @@ const Search = () => {
           ) : artworks.data?.length === 0 ? (
             setError({
               status: 404,
-              detail: `No Artworks Found. Please Try a Different Search Term.`,
+              detail: "No Artworks Found. Please Try a Different Search Term.",
             })
           ) : artworks.data?.length > 0 ? (
             <ArtworkList
