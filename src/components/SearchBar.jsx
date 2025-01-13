@@ -1,7 +1,8 @@
-import { search } from "@/chicago-api";
+import { searchChicagoArtworks, searchClevelandArtworks } from "@/api";
 import { CiSearch } from "react-icons/ci";
 
 const SearchBar = ({
+  selectedApi,
   searchTerm,
   setSearchTerm,
   setArtworks,
@@ -12,15 +13,31 @@ const SearchBar = ({
     e.preventDefault();
     setError({});
     setLoading(true);
-    search(searchTerm)
-      .then((res) => {
-        setArtworks(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setLoading(false)
-        setError(err.response.data);
-      });
+    if (selectedApi === "artInstChicago") {
+      searchChicagoArtworks(searchTerm)
+        .then((res) => {
+          setArtworks(res.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          setLoading(false);
+          setError(err.response.data);
+        });
+    }
+    if (selectedApi === "clevelandMuseumArt") {
+      searchClevelandArtworks(searchTerm, 0, 10)
+        .then((res) => {
+          setArtworks(res.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          setLoading(false);
+          setError({
+            status: err.response.status,
+            detail: err.response.data.detail[0].msg,
+          });
+        });
+    }
   }
 
   return (
