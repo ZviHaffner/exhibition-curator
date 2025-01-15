@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { MdOutlineImageNotSupported } from "react-icons/md";
 
 const ArtworkCard = ({ selectedApi, artworks, artwork }) => {
@@ -27,28 +28,35 @@ const ArtworkCard = ({ selectedApi, artworks, artwork }) => {
     }
   }
 
+  function assignArtworkSrc() {
+    if (selectedApi === "artInstChicago") return "chicago";
+    if (selectedApi === "clevelandMuseumArt") return "cleveland";
+  }
+
   return (
-    <div className="flex items-center bg-white m-5 rounded-3xl shadow-lg transition duration-100 ease-in-out hover:-translate-y-1">
-      <div className="flex items-center size-32 bg-gray-50 mr-5 rounded-l-3xl">
-        {getImgSrc() ? (
-          <img
-            src={getImgSrc()}
-            alt={artwork.title || "Artwork"}
-            className="size-32 object-cover rounded-l-3xl"
-          />
-        ) : (
-          <MdOutlineImageNotSupported className="m-auto text-gray-300 size-20" />
-        )}
+    <Link href={`/artworks/${assignArtworkSrc()}/${artwork.id}`}>
+      <div className="flex items-center bg-white m-5 rounded-3xl shadow-lg transition duration-100 ease-in-out hover:-translate-y-1">
+        <div className="flex items-center size-32 bg-gray-50 mr-5 rounded-l-3xl">
+          {getImgSrc() ? (
+            <img
+              src={getImgSrc()}
+              alt={artwork.title || "Artwork"}
+              className="size-32 object-cover rounded-l-3xl"
+            />
+          ) : (
+            <MdOutlineImageNotSupported className="m-auto text-gray-300 size-20" />
+          )}
+        </div>
+        <div>
+          <p className="font-bold">
+            {artwork.title.length > 70
+              ? artwork.title.slice(0, 70) + "..."
+              : artwork.title}
+          </p>
+          <p className="text-sm">{getArtists()}</p>
+        </div>
       </div>
-      <div>
-        <p className="font-bold">
-          {artwork.title.length > 70
-            ? artwork.title.slice(0, 70) + "..."
-            : artwork.title}
-        </p>
-        <p className="text-sm">{getArtists()}</p>
-      </div>
-    </div>
+    </Link>
   );
 };
 
