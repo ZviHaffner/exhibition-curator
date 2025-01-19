@@ -13,6 +13,21 @@ export const searchChicagoArtworks = (q, page, limit) => {
   );
 };
 
+export const populateChicagoFilters = (q) => {
+  return artInstChicagoApi.get("/search?fields=artist_title,artwork_type_title,place_of_origin,department_title&limit=100", {
+    params: { q },
+  });
+};
+
+export const searchChicagoArtworksWithFilter = (q, page, limit, field, filterTerm) => {
+  return artInstChicagoApi.get(
+    `/search?fields=id,title,artist_title,image_id&query[match][${field}]=${filterTerm}`,
+    {
+      params: { q, page, limit },
+    }
+  );
+};
+
 export const getChicagoArtworkById = (id) => {
   return artInstChicagoApi.get(
     `/${id}?fields=id,title,date_display,artist_display,description,image_id`
