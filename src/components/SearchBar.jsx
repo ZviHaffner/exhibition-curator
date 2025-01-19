@@ -41,7 +41,7 @@ const SearchBar = ({
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="w-3/5 mx-auto">
       <div className="flex gap-5 my-5 p-1 bg-white border border-gray-300 rounded-full shadow-equal">
         <CiSearch className="text-3xl text-gray-500" />
         <input
