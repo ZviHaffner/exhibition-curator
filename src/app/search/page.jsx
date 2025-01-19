@@ -5,6 +5,7 @@ import ArtworkList from "@/components/ArtworkList";
 import SearchBar from "@/components/SearchBar";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ApiSelector from "@/components/ApiSelector";
+import Filters from "@/components/Filters";
 
 const Search = () => {
   const [selectedApi, setSelectedApi] = useState("");
@@ -14,7 +15,7 @@ const Search = () => {
   const [error, setError] = useState({});
 
   return (
-    <div className="w-2/3 mx-auto">
+    <div className="w-11/12 mx-auto">
       <ApiSelector setSelectedApi={setSelectedApi} setArtworks={setArtworks} />
       {selectedApi && (
         <>
@@ -40,14 +41,22 @@ const Search = () => {
               detail: "No Artworks Found. Please Try a Different Search Term.",
             })
           ) : artworks.data?.length > 0 ? (
-            <ArtworkList
-              selectedApi={selectedApi}
-              searchTerm={searchTerm}
-              artworks={artworks}
-              setArtworks={setArtworks}
-              setLoading={setLoading}
-              setError={setError}
-            />
+            <div className="flex">
+              <Filters
+                searchTerm={searchTerm}
+                setArtworks={setArtworks}
+                setLoading={setLoading}
+                setError={setError}
+              />
+              <ArtworkList
+                selectedApi={selectedApi}
+                searchTerm={searchTerm}
+                artworks={artworks}
+                setArtworks={setArtworks}
+                setLoading={setLoading}
+                setError={setError}
+              />
+            </div>
           ) : null}
         </>
       )}
