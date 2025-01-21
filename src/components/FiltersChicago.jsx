@@ -7,8 +7,10 @@ const FiltersChicago = ({ searchTerm, setArtworks, setLoading, setError }) => {
   const [artworkTypes, setArtworkTypes] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [placesOfOrigin, setPlacesOfOrigin] = useState([]);
-  const [selectedFilter, setSelectedFilter] = useState("");
-  const [filterTerm, setFilterTerm] = useState("");
+
+  const [selectedFilter, setSelectedFilter] = useState("select");
+  const [filterTerm, setFilterTerm] = useState("select");
+
   const [showDropdown, setShowDropdown] = useState(true);
   const [loadingFilters, setLoadingFilters] = useState(true);
 
@@ -57,8 +59,8 @@ const FiltersChicago = ({ searchTerm, setArtworks, setLoading, setError }) => {
           <select
             name="artists"
             id="artists"
-            defaultValue="select"
             className="p-2"
+            value={filterTerm}
             onChange={(e) => {
               setFilterTerm(e.target.value);
             }}
@@ -91,8 +93,8 @@ const FiltersChicago = ({ searchTerm, setArtworks, setLoading, setError }) => {
           <select
             name="artworkTypes"
             id="artworkTypes"
-            defaultValue="select"
             className="p-2"
+            value={filterTerm}
             onChange={(e) => {
               setFilterTerm(e.target.value);
             }}
@@ -125,8 +127,8 @@ const FiltersChicago = ({ searchTerm, setArtworks, setLoading, setError }) => {
           <select
             name="departments"
             id="departments"
-            defaultValue="select"
             className="p-2"
+            value={filterTerm}
             onChange={(e) => {
               setFilterTerm(e.target.value);
             }}
@@ -159,8 +161,8 @@ const FiltersChicago = ({ searchTerm, setArtworks, setLoading, setError }) => {
           <select
             name="placesOfOrigin"
             id="placesOfOrigin"
-            defaultValue="select"
             className="p-2"
+            value={filterTerm}
             onChange={(e) => {
               setFilterTerm(e.target.value);
             }}
@@ -215,10 +217,10 @@ const FiltersChicago = ({ searchTerm, setArtworks, setLoading, setError }) => {
       <select
         name="filterSubject"
         id="filterSubject"
-        defaultValue="select"
         className="p-2 mb-4"
+        value={selectedFilter}
         onChange={(e) => {
-          setFilterTerm("");
+          setFilterTerm("select");
           setSelectedFilter(e.target.value);
         }}
       >
@@ -274,7 +276,7 @@ const FiltersChicago = ({ searchTerm, setArtworks, setLoading, setError }) => {
           <button
             type="submit"
             className="my-4 mx-auto py-2 px-4 bg-white border rounded-sm hover:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
-            disabled={!filterTerm}
+            disabled={filterTerm === "select"}
           >
             Save
           </button>
