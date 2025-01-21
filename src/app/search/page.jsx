@@ -5,7 +5,8 @@ import ArtworkList from "@/components/ArtworkList";
 import SearchBar from "@/components/SearchBar";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import ApiSelector from "@/components/ApiSelector";
-import Filters from "@/components/Filters";
+import FiltersChicago from "@/components/FiltersChicago";
+import FiltersCleveland from "@/components/FiltersCleveland";
 
 const Search = () => {
   const [selectedApi, setSelectedApi] = useState("");
@@ -42,12 +43,21 @@ const Search = () => {
             })
           ) : artworks.data?.length > 0 ? (
             <div className="flex">
-              <Filters
-                searchTerm={searchTerm}
-                setArtworks={setArtworks}
-                setLoading={setLoading}
-                setError={setError}
-              />
+              {selectedApi === "artInstChicago" ? (
+                <FiltersChicago
+                  searchTerm={searchTerm}
+                  setArtworks={setArtworks}
+                  setLoading={setLoading}
+                  setError={setError}
+                />
+              ) : selectedApi === "clevelandMuseumArt" ? (
+                <FiltersCleveland
+                  searchTerm={searchTerm}
+                  setArtworks={setArtworks}
+                  setLoading={setLoading}
+                  setError={setError}
+                />
+              ) : null}
               <ArtworkList
                 selectedApi={selectedApi}
                 searchTerm={searchTerm}
