@@ -23,7 +23,7 @@ const ArtworkList = ({
   }
   
   return (
-    <div>
+    <div className="flex-1 border-l">
       {renderResultsCount()}
       {artworks.data?.length > 0 &&
         artworks.data.map((artwork) => {

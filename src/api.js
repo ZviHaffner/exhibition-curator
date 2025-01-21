@@ -13,6 +13,30 @@ export const searchChicagoArtworks = (q, page, limit) => {
   );
 };
 
+export const populateChicagoFilters = (q) => {
+  return artInstChicagoApi.get(
+    "/search?fields=artist_title,artwork_type_title,place_of_origin,department_title&limit=100",
+    {
+      params: { q },
+    }
+  );
+};
+
+export const searchChicagoArtworksWithFilter = (
+  q,
+  page,
+  limit,
+  field,
+  filterTerm
+) => {
+  return artInstChicagoApi.get(
+    `/search?fields=id,title,artist_title,image_id&query[match][${field}]=${filterTerm}`,
+    {
+      params: { q, page, limit },
+    }
+  );
+};
+
 export const getChicagoArtworkById = (id) => {
   return artInstChicagoApi.get(
     `/${id}?fields=id,title,date_display,artist_display,description,image_id`
@@ -26,6 +50,36 @@ const clevelandMuseumArtApi = axios.create({
 export const searchClevelandArtworks = (q, skip, limit) => {
   return clevelandMuseumArtApi.get("/?fields=id,title,creators,images", {
     params: { q, skip, limit },
+  });
+};
+
+export const populateClevelandArtistFilter = (q) => {
+  return clevelandMuseumArtApi.get("/?fields=creators", {
+    params: { q },
+  });
+};
+
+export const searchClevelandArtworksWithFilter = (
+  q,
+  artists,
+  department,
+  type,
+  created_before,
+  created_after,
+  skip,
+  limit
+) => {
+  return clevelandMuseumArtApi.get("/?fields=id,title,creators,images", {
+    params: {
+      q,
+      artists,
+      department,
+      type,
+      created_before,
+      created_after,
+      skip,
+      limit,
+    },
   });
 };
 
