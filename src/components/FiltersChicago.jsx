@@ -2,7 +2,7 @@ import { populateChicagoFilters, searchChicagoArtworksWithFilter } from "@/api";
 import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 
-const Filters = ({ searchTerm, setArtworks, setLoading, setError }) => {
+const FiltersChicago = ({ searchTerm, setArtworks, setLoading, setError }) => {
   const [artists, setArtists] = useState([]);
   const [artworkTypes, setArtworkTypes] = useState([]);
   const [departments, setDepartments] = useState([]);
@@ -284,4 +284,4 @@ const Filters = ({ searchTerm, setArtworks, setLoading, setError }) => {
   );
 };
 
-export default Filters;
+export default FiltersChicago;
