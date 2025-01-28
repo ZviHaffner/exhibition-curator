@@ -7,8 +7,12 @@ const Nav = () => {
         <li className="flex-1">
           <Link href="/">Home</Link>
         </li>
-        <li className="flex-1"><Link href="/search">Search Artworks</Link></li>
-        <li className="flex-1">My Exhibitions</li>
+        <li className="flex-1">
+          <Link href="/search">Search Artworks</Link>
+        </li>
+        <li className="flex-1">
+          <Link href="/exhibition">My Exhibition</Link>
+        </li>
       </ul>
     </nav>
   );
