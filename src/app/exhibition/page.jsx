@@ -34,6 +34,7 @@ const Exhibition = () => {
             onClick={() => {
               setExhibitionArtworks([]);
             }}
+            className="mr-10 py-2 px-4 bg-white border rounded-sm shadow-equal hover:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
           >
             Reset
           </button>
