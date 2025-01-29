@@ -39,7 +39,16 @@ const ArtworkCard = ({ selectedApi, artworks, artwork }) => {
     if (selectedApi === "clevelandMuseumArt") return "cleveland";
   }
 
-  function handleClick() {
+  function isArtworkAdded() {
+    return exhibitionArtworks.some((savedArtwork) => {
+      if (savedArtwork.id === artwork.id) {
+        return true;
+      }
+      return false;
+    });
+  }
+
+  function handleAddArtwork() {
     const title =
       artwork.title.length > 70
         ? artwork.title.slice(0, 70) + "..."
@@ -54,6 +63,13 @@ const ArtworkCard = ({ selectedApi, artworks, artwork }) => {
         source: assignArtworkSrc(),
       },
     ]);
+  }
+
+  function handleRemoveArtwork(e) {
+    const filteredExhibition = exhibitionArtworks.filter((artwork) => {
+      return artwork.id !== Number(e.currentTarget.value);
+    });
+    setExhibitionArtworks(filteredExhibition);
   }
 
   return (
@@ -83,10 +99,11 @@ const ArtworkCard = ({ selectedApi, artworks, artwork }) => {
         </div>
       </Link>
       <button
-        onClick={handleClick}
-        className="mr-10 py-2 px-4 border rounded-sm shadow-equal hover:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
+        className="mr-10 py-2 px-4 border rounded-sm shadow-equal hover:bg-gray-100"
+        value={artwork.id}
+        onClick={!isArtworkAdded() ? handleAddArtwork : handleRemoveArtwork}
       >
-        Add to Exhibition
+        {!isArtworkAdded() ? "Add to Exhibition" : "Remove from Exhibition"}
       </button>
     </div>
   );
