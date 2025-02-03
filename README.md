@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Exhibition Curator
 
-## Getting Started
+[Deployed Version](https://exhibition-curator-nine.vercel.app/)
 
-First, run the development server:
+## General Information
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Overview
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Exhibition Curator is a platform designed for users to curate and manage temporary exhibitions. The platform allows users to search, browse, and curate artworks from the Art Institute of Chicago and the Cleveland Museum of Art. This project serves as an MVP, integrating data from the museums' API to display artwork details, filter and sort collections, and create custom exhibitions.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Search and Browse**: Users can search and explore available artworks.
+- **Filter and Sort**: Filter collections by various categories and sort artworks based on specific attributes.
+- **Artwork Details**: View detailed information about each artwork, including artist, creation date, and description.
+- **Exhibition Curation**: Curate temporary exhibitions by selecting saved artworks.
 
-## Learn More
+## Running the Project Locally
 
-To learn more about Next.js, take a look at the following resources:
+Follow these steps to run the project on your local machine:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Clone the repository:**
+  `git clone https://github.com/ZviHaffner/exhibition-curator`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. **Navigate to the project directory:**
+  `cd exhibition-curator`
 
-## Deploy on Vercel
+3. **Install the dependencies:**
+  `npm install`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. **Start the development server:**
+  `npm run dev`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. **Open the app in your browser:**
+  The app be available at http://localhost:3000
