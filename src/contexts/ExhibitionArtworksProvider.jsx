@@ -11,7 +11,7 @@ export default function ExhibitionArtworksProvider({ children }) {
     const savedArtworks = JSON.parse(
       localStorage.getItem("exhibitionArtworks")
     );
-    if (savedArtworks.length) setExhibitionArtworks(savedArtworks);
+    if (savedArtworks?.length) setExhibitionArtworks(savedArtworks);
   }, []);
 
   useEffect(() => {
