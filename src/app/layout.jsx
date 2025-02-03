@@ -16,6 +16,7 @@ export default function RootLayout({ children }) {
       <ExhibitionArtworksProvider>
         <body className="flex flex-col min-h-screen">
           <Header />
+          <hr />
           <Nav />
           <main className="grow bg-slate-50">{children}</main>
           <Footer />
