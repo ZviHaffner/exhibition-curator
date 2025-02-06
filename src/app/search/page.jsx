@@ -17,11 +17,11 @@ const Search = () => {
 
   return (
     <div className="w-11/12 mx-auto">
-      <ApiSelector setSelectedApi={setSelectedApi} setArtworks={setArtworks} />
-      {selectedApi && (
+      {selectedApi ? (
         <>
           <SearchBar
             selectedApi={selectedApi}
+            setSelectedApi={setSelectedApi}
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
             setArtworks={setArtworks}
@@ -69,6 +69,11 @@ const Search = () => {
             </div>
           ) : null}
         </>
+      ) : (
+        <ApiSelector
+          setSelectedApi={setSelectedApi}
+          setArtworks={setArtworks}
+        />
       )}
     </div>
   );
