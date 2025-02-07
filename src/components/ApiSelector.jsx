@@ -5,12 +5,12 @@ const ApiSelector = ({ setSelectedApi, setArtworks }) => {
   }
 
   return (
-    <div className="mx-auto w-2/3">
+    <div className="mx-auto w-11/12 md:w-2/3">
       <h2 className="mt-8 text-center text-2xl font-serif">
         Please Select a Source to Search From
       </h2>
-      <div className="my-8 flex justify-around">
-        <div className="w-2/5 bg-white text-center rounded-3xl shadow-lg transition duration-100 ease-in-out hover:-translate-y-1">
+      <div className="my-8 md:flex justify-around">
+        <div className="my-8 md:my-0 bg-white text-center rounded-3xl shadow-lg transition duration-100 ease-in-out hover:-translate-y-1">
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/5/51/20070622_Art_Institute_of_Chicago_Front_View.JPG"
             alt="Art Institute of Chicago"
@@ -25,7 +25,7 @@ const ApiSelector = ({ setSelectedApi, setArtworks }) => {
             Select
           </button>
         </div>
-        <div className="w-2/5 bg-white text-center rounded-3xl shadow-lg transition duration-100 ease-in-out hover:-translate-y-1">
+        <div className="my-8 md:my-0 bg-white text-center rounded-3xl shadow-lg transition duration-100 ease-in-out hover:-translate-y-1">
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/5/52/Cleveland_Museum_of_Art.jpg"
             alt="Cleveland Museum of Art"
