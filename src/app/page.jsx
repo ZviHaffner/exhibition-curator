@@ -5,7 +5,7 @@ export default function Home() {
     <div>
       <div className="bg-[url(https://upload.wikimedia.org/wikipedia/commons/d/d9/Whitney_Western_Art_Museum.jpg)] bg-cover bg-center">
         <div className="bg-white/80">
-          <div className="mx-auto h-[calc(100vh-7rem)] w-2/3 flex items-center">
+          <div className="mx-auto h-[calc(100vh-12rem)] md:h-[calc(100vh-7rem)] w-11/12 md:w-2/3 flex items-center">
             <section className="my-auto">
               <h1 className="text-5xl font-serif">Exhibition Curator</h1>
               <h2 className="my-4 text-3xl font-serif">
@@ -23,12 +23,12 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="h-[calc(100vh-6rem)] mx-auto w-2/3">
+      <div className="md:h-[calc(100vh-6rem)] mx-auto w-11/12 md:w-2/3">
         <h2 className="my-8 text-center text-3xl font-serif">
           Artwork Sources
         </h2>
-        <div className="my-10 flex justify-around">
-          <div className="w-2/5 bg-white text-center rounded-3xl shadow-lg transition duration-100 ease-in-out hover:-translate-y-1">
+        <div className="my-10 md:flex justify-around">
+          <div className="md:w-2/5 my-8 pb-4 bg-white text-center rounded-3xl shadow-lg transition duration-100 ease-in-out hover:-translate-y-1">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/5/51/20070622_Art_Institute_of_Chicago_Front_View.JPG"
               alt="Art Institute of Chicago"
@@ -46,13 +46,13 @@ export default function Home() {
             <a
               href="https://www.artic.edu/"
               target="_blank"
-              className="m-4 py-2 flex justify-center items-center gap-2 bg-gray-600 text-white rounded-lg hover:bg-gray-200 hover:text-black"
+              className="mx-4 py-2 px-4 flex justify-center items-center gap-1 bg-gray-600 text-white rounded-lg hover:bg-gray-200 hover:text-black"
             >
-              <p>Visit the Art Institute of Chicago Website</p>
+              <p>Visit their Website</p>
               <FaExternalLinkAlt />
             </a>
           </div>
-          <div className="w-2/5 bg-white text-center rounded-3xl shadow-lg transition duration-100 ease-in-out hover:-translate-y-1">
+          <div className="md:w-2/5 my-8 pb-4 bg-white text-center rounded-3xl shadow-lg transition duration-100 ease-in-out hover:-translate-y-1">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/5/52/Cleveland_Museum_of_Art.jpg"
               alt="Cleveland Museum of Art"
@@ -70,9 +70,9 @@ export default function Home() {
             <a
               href="https://www.clevelandart.org/"
               target="_blank"
-              className="m-4 py-2 flex justify-center items-center gap-2 bg-gray-600 text-white rounded-lg hover:bg-gray-200 hover:text-black"
+              className="mx-4 py-2 px-4 flex justify-center items-center gap-1 bg-gray-600 text-white rounded-lg hover:bg-gray-200 hover:text-black"
             >
-              <p>Visit the Cleveland Museum of Art Website</p>
+              <p>Visit their Website</p>
               <FaExternalLinkAlt />
             </a>
           </div>
