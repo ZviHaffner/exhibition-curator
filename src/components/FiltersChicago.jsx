@@ -210,7 +210,10 @@ const FiltersChicago = ({ searchTerm, setArtworks, setLoading, setError }) => {
   }
 
   return (
-    <form className="flex flex-col min-w-72 mr-5" onSubmit={handleSubmit}>
+    <form
+      className="flex flex-col min-w-72 md:pr-5 md:mr-5 md:border-r"
+      onSubmit={handleSubmit}
+    >
       <label htmlFor="filterSubject" className="my-2">
         Filter By
       </label>
@@ -233,7 +236,7 @@ const FiltersChicago = ({ searchTerm, setArtworks, setLoading, setError }) => {
         <option value="place_of_origin">Place of Origin</option>
       </select>
 
-      {selectedFilter && (
+      {selectedFilter !== "select" && (
         <>
           {showDropdown ? (
             renderFilterDropdown()
@@ -243,14 +246,14 @@ const FiltersChicago = ({ searchTerm, setArtworks, setLoading, setError }) => {
               <input
                 className="grow focus:outline-none"
                 type="search"
-                value={filterTerm}
+                value={filterTerm !== "select" ? filterTerm : ""}
                 onChange={(e) => setFilterTerm(e.target.value)}
                 placeholder="Filter Term"
               />
             </div>
           )}
           {showDropdown ? (
-            <p className="text-gray-600 text-xs my-2">
+            <p className="text-gray-600 text-xs text-center my-2">
               Cannot Find What You are Looking For?{" "}
               <button
                 type="button"
@@ -275,7 +278,7 @@ const FiltersChicago = ({ searchTerm, setArtworks, setLoading, setError }) => {
           )}
           <button
             type="submit"
-            className="my-4 mx-auto py-2 px-4 bg-white border rounded-sm hover:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
+            className="my-4 mx-auto py-2 px-4 bg-white border rounded-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none"
             disabled={filterTerm === "select"}
           >
             Save
