@@ -7,16 +7,42 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import ApiSelector from "@/components/ApiSelector";
 import FiltersChicago from "@/components/FiltersChicago";
 import FiltersCleveland from "@/components/FiltersCleveland";
+import { BsSliders } from "react-icons/bs";
+import { FiX } from "react-icons/fi";
 
 const Search = () => {
   const [selectedApi, setSelectedApi] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [artworks, setArtworks] = useState({});
+  const [showFilters, setShowFilters] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
 
+  function renderFilters() {
+    if (selectedApi === "artInstChicago") {
+      return (
+        <FiltersChicago
+          searchTerm={searchTerm}
+          setArtworks={setArtworks}
+          setLoading={setLoading}
+          setError={setError}
+        />
+      );
+    }
+    if (selectedApi === "clevelandMuseumArt") {
+      return (
+        <FiltersCleveland
+          searchTerm={searchTerm}
+          setArtworks={setArtworks}
+          setLoading={setLoading}
+          setError={setError}
+        />
+      );
+    }
+  }
+
   return (
-    <div className="w-11/12 mx-auto">
+    <div>
       {selectedApi ? (
         <>
           <SearchBar
@@ -28,6 +54,7 @@ const Search = () => {
             setLoading={setLoading}
             setError={setError}
           />
+
           {loading ? (
             <LoadingSpinner />
           ) : Object.keys(error).length ? (
@@ -42,30 +69,35 @@ const Search = () => {
               detail: "No Artworks Found. Please Try a Different Search Term.",
             })
           ) : artworks.data?.length > 0 ? (
-            <div className="flex">
-              {selectedApi === "artInstChicago" ? (
-                <FiltersChicago
+            <div className={`${showFilters ? "w-11/12 mx-auto" : "w-11/12 md:w-2/3 mx-auto"}`}>
+              <button
+                onClick={() => {
+                  setShowFilters(!showFilters);
+                }}
+              >
+                {showFilters ? (
+                  <div className="flex items-center gap-2 text-sm">
+                    <FiX size={24} />
+                    <p>Hide Filters</p>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 text-sm">
+                    <BsSliders size={24} />
+                    <p>Show Filters</p>
+                  </div>
+                )}
+              </button>
+              <div className="md:flex">
+                {showFilters && renderFilters()}
+                <ArtworkList
+                  selectedApi={selectedApi}
                   searchTerm={searchTerm}
+                  artworks={artworks}
                   setArtworks={setArtworks}
                   setLoading={setLoading}
                   setError={setError}
                 />
-              ) : selectedApi === "clevelandMuseumArt" ? (
-                <FiltersCleveland
-                  searchTerm={searchTerm}
-                  setArtworks={setArtworks}
-                  setLoading={setLoading}
-                  setError={setError}
-                />
-              ) : null}
-              <ArtworkList
-                selectedApi={selectedApi}
-                searchTerm={searchTerm}
-                artworks={artworks}
-                setArtworks={setArtworks}
-                setLoading={setLoading}
-                setError={setError}
-              />
+              </div>
             </div>
           ) : null}
         </>
