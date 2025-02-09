@@ -42,30 +42,30 @@ const Exhibition = () => {
             return (
               <div
                 key={artwork.id}
-                className="flex items-center justify-between bg-white m-5 text-left rounded-3xl shadow-lg transition duration-100 ease-in-out hover:-translate-y-1"
+                className="md:flex items-center justify-between bg-white my-8 rounded-3xl shadow-lg transition duration-100 ease-in-out hover:-translate-y-1"
               >
                 <Link
                   href={`/artworks/${artwork.source}/${artwork.id}`}
-                  className="flex items-center"
+                  className="md:flex items-center"
                 >
-                  <div className="flex size-32 bg-gray-50 mr-5 rounded-l-3xl">
+                  <div className="flex h-48 md:size-32 md:mr-5 md:rounded-l-3xl bg-gray-50">
                     {artwork.image ? (
                       <img
                         src={artwork.image}
                         alt={artwork.title || "Artwork"}
-                        className="size-32 object-cover rounded-l-3xl"
+                        className="w-full h-48 rounded-t-3xl object-cover md:size-32 md:rounded-none md:rounded-l-3xl"
                       />
                     ) : (
                       <MdOutlineImageNotSupported className="m-auto text-gray-300 size-20" />
                     )}
                   </div>
-                  <div>
-                    <p className="font-bold">{artwork.title}</p>
-                    <p className="text-sm">{artwork.artists}</p>
+                  <div className="my-4">
+                    <p className="md:text-left font-bold">{artwork.title}</p>
+                    <p className="md:text-left text-sm">{artwork.artists}</p>
                   </div>
                 </Link>
                 <button
-                  className="mr-10 text-xl text-gray-500 hover:text-red-600 disabled:text-gray-500 disabled:cursor-not-allowed"
+                  className="mb-4 md:mb-0 md:mr-10 text-xl text-gray-500 hover:text-red-600"
                   value={artwork.id}
                   onClick={handleClick}
                 >
