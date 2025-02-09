@@ -19,7 +19,7 @@ const Exhibition = () => {
   }
 
   return (
-    <div className="w-2/3 mx-auto text-center">
+    <div className="w-11/12 md:w-2/3 mx-auto text-center">
       <h1 className="my-5 text-4xl font-serif">My Exhibition</h1>
       {!exhibitionArtworks.length ? (
         <p>
