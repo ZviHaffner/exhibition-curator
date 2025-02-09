@@ -47,14 +47,14 @@ const SearchBar = ({
       selectedApiText = "Art Institute of Chicago";
     }
     if (selectedApi === "clevelandMuseumArt") {
-      selectedApiText = "Cleveland Museum of Art"; 
+      selectedApiText = "Cleveland Museum of Art";
     }
     return selectedApiText;
   }
 
   return (
     <search className="my-4">
-      <form onSubmit={handleSubmit} className="w-3/5 mx-auto">
+      <form onSubmit={handleSubmit} className="w-11/12 md:w-1/2 mx-auto">
         <div className="flex gap-5 p-1 bg-white border border-gray-300 rounded-full shadow-equal">
           <CiSearch className="text-3xl text-gray-500" />
           <input
@@ -67,8 +67,8 @@ const SearchBar = ({
           />
         </div>
       </form>
-      <div className="flex justify-center gap-1 mt-2 text-center text-sm">
-        <p>Searching From the {renderSelectedApi()} -</p>
+      <div className="m-2 text-sm text-center">
+        <p>Searching From the {renderSelectedApi()}</p>
         <button
           className="hover:text-gray-400"
           onClick={() => {

@@ -82,13 +82,13 @@ const Artwork = () => {
         <img
           src={getImgSrc()}
           alt={artwork.data?.title || "Artwork"}
-          className="my-10 mx-auto w-1/4"
+          className="my-4 md:my-10 mx-auto w-11/12 md:w-1/4"
         />
       ) : (
         <MdOutlineImageNotSupported className="my-10 m-auto text-gray-300 size-52" />
       )}
       <div className="bg-white">
-        <div className="py-10 mx-auto w-1/2 text-lg">
+        <div className="py-10 mx-auto w-11/12 md:w-1/2 text-lg">
           <hr className="mb-4" />
           <h1 className="font-serif text-4xl mb-8">{artwork.data.title}</h1>
           <p className="mb-8">

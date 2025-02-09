@@ -143,7 +143,13 @@ const FiltersCleveland = ({
   }, []);
 
   function isDisabled() {
-    if (artist || department || type || createdBefore || createdAfter)
+    if (
+      artist !== "select" ||
+      department !== "select" ||
+      type !== "select" ||
+      createdBefore ||
+      createdAfter
+    )
       return false;
     else return true;
   }
@@ -195,7 +201,10 @@ const FiltersCleveland = ({
   }
 
   return (
-    <form className="flex flex-col min-w-72 mr-5" onSubmit={handleSubmit}>
+    <form
+      className="flex flex-col min-w-72 md:pr-5 md:mr-5 md:border-r"
+      onSubmit={handleSubmit}
+    >
       <label htmlFor="artists" className="my-2">
         Artists
       </label>
@@ -306,7 +315,7 @@ const FiltersCleveland = ({
           max={thisYear}
         />
       </div>
-      <p className="text-sm text-red-600">{creationDatesErr}</p>
+      <p className="text-center text-sm text-red-600">{creationDatesErr}</p>
       <p className="my-2 text-xs text-gray-600 text-center">
         Negative Years are BCE
         <br />
@@ -315,14 +324,14 @@ const FiltersCleveland = ({
       <div className="flex">
         <button
           type="submit"
-          className="my-4 mx-auto py-2 px-4 bg-white border rounded-sm hover:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
+          className="my-4 mx-auto py-2 px-4 bg-white border rounded-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={isDisabled()}
         >
           Save
         </button>
         <button
           type="button"
-          className="my-4 mx-auto py-2 px-4 bg-white border rounded-sm hover:bg-gray-100 disabled:text-gray-500 disabled:cursor-not-allowed"
+          className="my-4 mx-auto py-2 px-4 bg-white border rounded-sm hover:bg-gray-100"
           onClick={handleReset}
         >
           Reset
