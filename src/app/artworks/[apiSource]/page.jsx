@@ -14,6 +14,18 @@ const apiSource = () => {
           alt="Art Institute of Chicago"
           className="mx-auto w-11/12 my-4 md:my-10 md:w-1/4"
         />
+        <p className="text-right text-gray-600 text-xs">
+              Image:{" "}
+              <a
+                href="https://en.wikipedia.org/wiki/File:20070622_Art_Institute_of_Chicago_Front_View.JPG"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                Art Institute of Chicago Building by TonyTheTiger
+              </a>{" "}
+              (licensed under CC BY-SA 3.0).
+            </p>
         <div className="pt-8 pb-4 bg-white border-b">
           <hr className="mb-4" />
           <article className="mx-auto w-11/12 md:w-1/2">
@@ -48,6 +60,18 @@ const apiSource = () => {
           alt="Cleveland Museum of Art"
           className="mx-auto w-11/12 my-4 md:my-10 md:w-1/4"
         />
+        <p className="text-right text-gray-600 text-xs">
+          Image:{" "}
+          <a
+            href="https://www.flickr.com/photos/edrost88/50586890476/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline"
+          >
+            Cleveland Museum of Art by Erik Drost
+          </a>{" "}
+          (licensed under CC BY 2.0).
+        </p>
         <div className="pt-8 pb-4 bg-white border-b">
           <hr className="mb-4" />
           <article className="mx-auto w-11/12 md:w-1/2">

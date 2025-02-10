@@ -16,6 +16,18 @@ const ApiSelector = ({ setSelectedApi, setArtworks }) => {
             alt="Art Institute of Chicago"
             className="w-full h-48 object-cover rounded-t-3xl"
           />
+          <p className="text-gray-600 text-xs">
+            Image:{" "}
+            <a
+              href="https://en.wikipedia.org/wiki/File:20070622_Art_Institute_of_Chicago_Front_View.JPG"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline"
+            >
+              Art Institute of Chicago Building by TonyTheTiger
+            </a>{" "}
+            (licensed under CC BY-SA 3.0).
+          </p>
           <h3 className="mt-4 font-serif text-xl">Art Institute of Chicago</h3>
           <button
             value="artInstChicago"
@@ -31,6 +43,18 @@ const ApiSelector = ({ setSelectedApi, setArtworks }) => {
             alt="Cleveland Museum of Art"
             className="w-full h-48 object-cover rounded-t-3xl"
           />
+          <p className="text-gray-600 text-xs">
+            Image:{" "}
+            <a
+              href="https://www.flickr.com/photos/edrost88/50586890476/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline"
+            >
+              Cleveland Museum of Art by Erik Drost
+            </a>{" "}
+            (licensed under CC BY 2.0).
+          </p>
           <h3 className="mt-4 font-serif text-xl">Cleveland Museum of Art</h3>
           <button
             value="clevelandMuseumArt"

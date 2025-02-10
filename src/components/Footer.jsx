@@ -1,9 +1,12 @@
+import Link from "next/link";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   return (
     <div className="flex items-center justify-center p-4">
-      <div className="flex-1" />
+      <Link href="/credits" className="flex-1 text-sm hover:text-gray-500">
+      Credits & Attributions
+      </Link>
       <p className="text-sm">&copy; Zvi Haffner {new Date().getFullYear()}</p>
       <div className="flex-1 flex justify-end gap-5">
         <a

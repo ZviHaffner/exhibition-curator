@@ -23,6 +23,18 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <p className="text-right text-gray-600 text-xs">
+        Image:{" "}
+        <a
+          href="https://commons.wikimedia.org/wiki/File:Whitney_Western_Art_Museum.jpg"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline"
+        >
+          Whitney Western Art Museum by Levimeyer1
+        </a>{" "}
+        (licensed under CC BY-SA 4.0).
+      </p>
       <div className="md:h-[calc(100vh-6rem)] mx-auto w-11/12 md:w-2/3">
         <h2 className="my-8 text-center text-3xl font-serif">
           Artwork Sources
@@ -34,6 +46,18 @@ export default function Home() {
               alt="Art Institute of Chicago"
               className="w-full h-48 object-cover rounded-t-3xl"
             />
+            <p className="text-gray-600 text-xs">
+              Image:{" "}
+              <a
+                href="https://en.wikipedia.org/wiki/File:20070622_Art_Institute_of_Chicago_Front_View.JPG"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                Art Institute of Chicago Building by TonyTheTiger
+              </a>{" "}
+              (licensed under CC BY-SA 3.0).
+            </p>
             <section className="m-4">
               <h3 className="font-serif text-xl">Art Institute of Chicago</h3>
               <p>
@@ -58,6 +82,18 @@ export default function Home() {
               alt="Cleveland Museum of Art"
               className="w-full h-48 object-cover rounded-t-3xl"
             />
+            <p className="text-gray-600 text-xs">
+              Image:{" "}
+              <a
+                href="https://www.flickr.com/photos/edrost88/50586890476/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                Cleveland Museum of Art by Erik Drost
+              </a>{" "}
+              (licensed under CC BY 2.0).
+            </p>
             <section className="m-4">
               <h3 className="font-serif text-xl">Cleveland Museum of Art</h3>
               <p>
