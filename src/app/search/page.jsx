@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ArtworkList from "@/components/ArtworkList";
 import SearchBar from "@/components/SearchBar";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -9,6 +9,7 @@ import FiltersChicago from "@/components/FiltersChicago";
 import FiltersCleveland from "@/components/FiltersCleveland";
 import { BsSliders } from "react-icons/bs";
 import { FiX } from "react-icons/fi";
+import { useSearchParams } from "next/navigation";
 
 const Search = () => {
   const [selectedApi, setSelectedApi] = useState("");
@@ -17,6 +18,15 @@ const Search = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const q = searchParams.get("q") || "";
+    const source = searchParams.get("source") || "";
+    setSearchTerm(q);
+    setSelectedApi(source);
+  }, [searchParams]);
 
   function renderFilters() {
     if (selectedApi === "artInstChicago") {
@@ -69,7 +79,11 @@ const Search = () => {
               detail: "No Artworks Found. Please Try a Different Search Term.",
             })
           ) : artworks.data?.length > 0 ? (
-            <div className={`${showFilters ? "w-11/12 mx-auto" : "w-11/12 md:w-2/3 mx-auto"}`}>
+            <div
+              className={`${
+                showFilters ? "w-11/12 mx-auto" : "w-11/12 md:w-2/3 mx-auto"
+              }`}
+            >
               <button
                 onClick={() => {
                   setShowFilters(!showFilters);

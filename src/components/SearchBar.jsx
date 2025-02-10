@@ -1,4 +1,6 @@
 import { searchChicagoArtworks, searchClevelandArtworks } from "@/api";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { CiSearch } from "react-icons/ci";
 
 const SearchBar = ({
@@ -10,8 +12,18 @@ const SearchBar = ({
   setLoading,
   setError,
 }) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (searchTerm) {
+      handleSubmit()
+    }
+  }, [])
+  
+
   function handleSubmit(e) {
-    e.preventDefault();
+    if (e) e.preventDefault();
+    router.push(`?q=${searchTerm}&source=${selectedApi}`)
     setError({});
     setLoading(true);
     if (selectedApi === "artInstChicago") {
