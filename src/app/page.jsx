@@ -23,7 +23,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <p className="text-right text-gray-600 text-xs">
+      <p className="text-center md:text-right text-gray-400 text-xs">
         Image:{" "}
         <a
           href="https://commons.wikimedia.org/wiki/File:Whitney_Western_Art_Museum.jpg"
@@ -46,7 +46,7 @@ export default function Home() {
               alt="Art Institute of Chicago"
               className="w-full h-48 object-cover rounded-t-3xl"
             />
-            <p className="text-gray-600 text-xs">
+            <p className="text-gray-400 text-xs">
               Image:{" "}
               <a
                 href="https://en.wikipedia.org/wiki/File:20070622_Art_Institute_of_Chicago_Front_View.JPG"
@@ -82,7 +82,7 @@ export default function Home() {
               alt="Cleveland Museum of Art"
               className="w-full h-48 object-cover rounded-t-3xl"
             />
-            <p className="text-gray-600 text-xs">
+            <p className="text-gray-400 text-xs">
               Image:{" "}
               <a
                 href="https://www.flickr.com/photos/edrost88/50586890476/"

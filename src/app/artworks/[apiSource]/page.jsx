@@ -14,7 +14,7 @@ const apiSource = () => {
           alt="Art Institute of Chicago"
           className="mx-auto w-11/12 my-4 md:my-10 md:w-1/4"
         />
-        <p className="text-right text-gray-600 text-xs">
+        <p className="text-center md:text-right text-gray-600 text-xs">
               Image:{" "}
               <a
                 href="https://en.wikipedia.org/wiki/File:20070622_Art_Institute_of_Chicago_Front_View.JPG"
@@ -60,7 +60,7 @@ const apiSource = () => {
           alt="Cleveland Museum of Art"
           className="mx-auto w-11/12 my-4 md:my-10 md:w-1/4"
         />
-        <p className="text-right text-gray-600 text-xs">
+        <p className="text-center md:text-right text-gray-600 text-xs">
           Image:{" "}
           <a
             href="https://www.flickr.com/photos/edrost88/50586890476/"
