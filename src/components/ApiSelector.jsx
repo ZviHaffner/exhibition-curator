@@ -16,7 +16,7 @@ const ApiSelector = ({ setSelectedApi, setArtworks }) => {
             alt="Art Institute of Chicago"
             className="w-full h-48 object-cover rounded-t-3xl"
           />
-          <p className="text-gray-600 text-xs">
+          <p className="text-gray-400 text-xs">
             Image:{" "}
             <a
               href="https://en.wikipedia.org/wiki/File:20070622_Art_Institute_of_Chicago_Front_View.JPG"
@@ -43,7 +43,7 @@ const ApiSelector = ({ setSelectedApi, setArtworks }) => {
             alt="Cleveland Museum of Art"
             className="w-full h-48 object-cover rounded-t-3xl"
           />
-          <p className="text-gray-600 text-xs">
+          <p className="text-gray-400 text-xs">
             Image:{" "}
             <a
               href="https://www.flickr.com/photos/edrost88/50586890476/"
