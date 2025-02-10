@@ -1,8 +1,11 @@
 const LoadingSpinner = () => {
   return (
-    <div className="m-5">
-      <div className="m-auto w-8 h-8 border-4 border-blue-500 border-t-gray-200 rounded-full animate-spin" />
-    </div>
+    <>
+      <div
+        className={`mt-52 mx-auto size-16 border-8 border-dotted border-black border-t-gray-200 rounded-full animate-spin`}
+      />
+      <p className="my-4 text-center font-serif text-xl">Loading...</p>
+    </>
   );
 };
 
