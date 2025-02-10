@@ -14,10 +14,10 @@ export default function Home() {
               <p className="text-xl">
                 Explore a vast collection of nearly 200,000 artworks from the{" "}
                 <span className="font-bold">Art Institute of Chicago</span> and
-                the <span className="font-bold">Cleveland Museum of Art</span>. Discover paintings, sculptures, and
-                other masterpieces, and curate your own personalised exhibition.
-                Unleash your creativity and bring art to life in a way that's
-                uniquely yours.
+                the <span className="font-bold">Cleveland Museum of Art</span>.
+                Discover paintings, sculptures, and other masterpieces, and
+                curate your own personalised exhibition. Unleash your creativity
+                and bring art to life in a way that's uniquely yours.
               </p>
             </section>
           </div>
@@ -46,7 +46,7 @@ export default function Home() {
             <a
               href="https://www.artic.edu/"
               target="_blank"
-              className="mx-4 py-2 px-4 flex justify-center items-center gap-1 bg-gray-600 text-white rounded-lg hover:bg-gray-200 hover:text-black"
+              className="w-fit mx-auto py-2 px-4 flex justify-center items-center gap-1 bg-gray-600 text-white rounded-lg hover:bg-gray-200 hover:text-black"
             >
               <p>Visit their Website</p>
               <FaExternalLinkAlt />
@@ -70,7 +70,7 @@ export default function Home() {
             <a
               href="https://www.clevelandart.org/"
               target="_blank"
-              className="mx-4 py-2 px-4 flex justify-center items-center gap-1 bg-gray-600 text-white rounded-lg hover:bg-gray-200 hover:text-black"
+              className="w-fit mx-auto py-2 px-4 flex justify-center items-center gap-1 bg-gray-600 text-white rounded-lg hover:bg-gray-200 hover:text-black"
             >
               <p>Visit their Website</p>
               <FaExternalLinkAlt />
