@@ -2,10 +2,10 @@ import {
   populateClevelandArtistFilter,
   searchClevelandArtworksWithFilter,
 } from "@/api";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const FiltersCleveland = ({
-  searchTerm,
   setArtworks,
   setLoading,
   setError,
@@ -118,8 +118,11 @@ const FiltersCleveland = ({
   const [createdBefore, setCreatedBefore] = useState("");
   const [createdAfter, setCreatedAfter] = useState("");
 
+  const searchParams = useSearchParams();
+    const query = searchParams.get("q");
+
   useEffect(() => {
-    populateClevelandArtistFilter(searchTerm)
+    populateClevelandArtistFilter(query)
       .then((res) => {
         const artistsArr = [];
 
@@ -180,7 +183,7 @@ const FiltersCleveland = ({
     if (isValid) {
       setLoading(true);
       searchClevelandArtworksWithFilter(
-        searchTerm,
+        query,
         artist === "select" ? null : artist,
         department === "select" ? null : department,
         type === "select" ? null : type,

@@ -1,32 +1,35 @@
 import { ExhibitionArtworksContext } from "@/contexts/ExhibitionArtworksProvider";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { useContext } from "react";
 import { MdOutlineImageNotSupported } from "react-icons/md";
 
-const ArtworkCard = ({ selectedApi, artworks, artwork }) => {
+const ArtworkCard = ({ artworks, artwork }) => {
   const { exhibitionArtworks, setExhibitionArtworks } = useContext(
     ExhibitionArtworksContext
   );
 
+  const { apiSource } = useParams();
+
   function getImgSrc() {
     if (
-      selectedApi === "artInstChicago" &&
+      apiSource === "chicago" &&
       artwork.image_id &&
       artworks.config?.iiif_url
     ) {
       return `${artworks.config.iiif_url}/${artwork.image_id}/full/843,/0/default.jpg`;
     }
-    if (selectedApi === "clevelandMuseumArt" && artwork.images?.web?.url) {
+    if (apiSource === "cleveland" && artwork.images?.web?.url) {
       return artwork.images.web.url;
     }
     return null;
   }
 
   function getArtists() {
-    if (selectedApi === "artInstChicago") {
+    if (apiSource === "chicago") {
       return artwork.artist_title || "Unknown Artist";
     }
-    if (selectedApi === "clevelandMuseumArt") {
+    if (apiSource === "cleveland") {
       const artists = artwork.creators.map(
         (artist) => artist.description || "Unknown Artist"
       );
@@ -35,8 +38,8 @@ const ArtworkCard = ({ selectedApi, artworks, artwork }) => {
   }
 
   function assignArtworkSrc() {
-    if (selectedApi === "artInstChicago") return "chicago";
-    if (selectedApi === "clevelandMuseumArt") return "cleveland";
+    if (apiSource === "chicago") return "chicago";
+    if (apiSource === "cleveland") return "cleveland";
   }
 
   function isArtworkAdded() {

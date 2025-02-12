@@ -1,71 +1,56 @@
+import { useEffect, useState } from "react";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { searchChicagoArtworks, searchClevelandArtworks } from "@/api";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { CiSearch } from "react-icons/ci";
 
-const SearchBar = ({
-  selectedApi,
-  setSelectedApi,
-  searchTerm,
-  setSearchTerm,
-  setArtworks,
-  setLoading,
-  setError,
-}) => {
+const SearchBar = ({ setArtworks, setLoading, setError }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
   const router = useRouter();
+  const { apiSource } = useParams();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (searchTerm) {
-      handleSubmit()
+    const query = searchParams.get("q") || "";
+    if (query) {
+      setSearchTerm(query);
+      setError({});
+      setLoading(true);
+      if (apiSource === "chicago") {
+        searchChicagoArtworks(query)
+          .then((res) => {
+            setArtworks(res.data);
+            setLoading(false);
+          })
+          .catch((err) => {
+            setLoading(false);
+            setError(err.response.data);
+          });
+      }
+      if (apiSource === "cleveland") {
+        searchClevelandArtworks(query, 0, 10)
+          .then((res) => {
+            setArtworks(res.data);
+            setLoading(false);
+          })
+          .catch((err) => {
+            setLoading(false);
+            setError({
+              status: err.response.status,
+              detail: err.response.data.detail[0].msg,
+            });
+          });
+      }
     }
-  }, [])
-  
+  }, [searchParams]);
 
   function handleSubmit(e) {
-    if (e) e.preventDefault();
-    router.push(`?q=${searchTerm}&source=${selectedApi}`)
-    setError({});
-    setLoading(true);
-    if (selectedApi === "artInstChicago") {
-      searchChicagoArtworks(searchTerm)
-        .then((res) => {
-          setArtworks(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          setLoading(false);
-          setError(err.response.data);
-        });
-    }
-    if (selectedApi === "clevelandMuseumArt") {
-      searchClevelandArtworks(searchTerm, 0, 10)
-        .then((res) => {
-          setArtworks(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          setLoading(false);
-          setError({
-            status: err.response.status,
-            detail: err.response.data.detail[0].msg,
-          });
-        });
-    }
-  }
-
-  function renderSelectedApi() {
-    let selectedApiText;
-    if (selectedApi === "artInstChicago") {
-      selectedApiText = "Art Institute of Chicago";
-    }
-    if (selectedApi === "clevelandMuseumArt") {
-      selectedApiText = "Cleveland Museum of Art";
-    }
-    return selectedApiText;
+    e.preventDefault();
+    router.push(`?q=${searchTerm}`);
   }
 
   return (
-    <search className="my-4">
+    <search className="my-8">
       <form onSubmit={handleSubmit} className="w-11/12 md:w-1/2 mx-auto">
         <div className="flex gap-5 p-1 bg-white border border-gray-300 rounded-full shadow-equal">
           <CiSearch className="text-3xl text-gray-500" />
@@ -74,22 +59,16 @@ const SearchBar = ({
             type="search"
             value={searchTerm}
             onChange={(event) => setSearchTerm(event.target.value)}
-            placeholder="Search Thousands of Artworks"
+            placeholder={`Search Artworks from the ${
+              {
+                chicago: "Art Institute of Chicago",
+                cleveland: "Cleveland Museum of Art",
+              }[apiSource]
+            }`}
             required
           />
         </div>
       </form>
-      <div className="m-2 text-sm text-center">
-        <p>Searching From the {renderSelectedApi()}</p>
-        <button
-          className="hover:text-gray-400"
-          onClick={() => {
-            setSelectedApi("");
-          }}
-        >
-          Click Here to Change Source
-        </button>
-      </div>
     </search>
   );
 };

@@ -1,8 +1,9 @@
 import { populateChicagoFilters, searchChicagoArtworksWithFilter } from "@/api";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 
-const FiltersChicago = ({ searchTerm, setArtworks, setLoading, setError }) => {
+const FiltersChicago = ({ setArtworks, setLoading, setError }) => {
   const [artists, setArtists] = useState([]);
   const [artworkTypes, setArtworkTypes] = useState([]);
   const [departments, setDepartments] = useState([]);
@@ -14,8 +15,11 @@ const FiltersChicago = ({ searchTerm, setArtworks, setLoading, setError }) => {
   const [showDropdown, setShowDropdown] = useState(true);
   const [loadingFilters, setLoadingFilters] = useState(true);
 
+  const searchParams = useSearchParams();
+  const query = searchParams.get("q");
+
   useEffect(() => {
-    populateChicagoFilters(searchTerm)
+    populateChicagoFilters(query)
       .then((res) => {
         const artistsArr = res.data.data.map((artwork) => {
           return artwork.artist_title || "Unknown Artist";
@@ -193,7 +197,7 @@ const FiltersChicago = ({ searchTerm, setArtworks, setLoading, setError }) => {
     e.preventDefault();
     setLoading(true);
     searchChicagoArtworksWithFilter(
-      searchTerm,
+      query,
       1,
       10,
       selectedFilter,

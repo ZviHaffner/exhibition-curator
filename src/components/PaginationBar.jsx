@@ -1,19 +1,22 @@
 import { searchChicagoArtworks, searchClevelandArtworks } from "@/api";
+import { useParams, useSearchParams } from "next/navigation";
 import { VscEllipsis } from "react-icons/vsc";
 
 const PaginationBar = ({
-  selectedApi,
   paginationData,
-  searchTerm,
   setArtworks,
   setLoading,
   setError,
 }) => {
+  const { apiSource } = useParams();
+  const searchParams = useSearchParams();
+  const query = searchParams.get("q");
+
   function handleClick(e) {
     setError({});
     setLoading(true);
-    if (selectedApi === "artInstChicago") {
-      searchChicagoArtworks(searchTerm, e.target.value, 10)
+    if (apiSource === "chicago") {
+      searchChicagoArtworks(query, e.target.value, 10)
         .then((res) => {
           setArtworks(res.data);
           setLoading(false);
@@ -23,8 +26,8 @@ const PaginationBar = ({
           setError(err.response.data);
         });
     }
-    if (selectedApi === "clevelandMuseumArt") {
-      searchClevelandArtworks(searchTerm, (e.target.value - 1) * 10, 10)
+    if (apiSource === "cleveland") {
+      searchClevelandArtworks(query, (e.target.value - 1) * 10, 10)
         .then((res) => {
           setArtworks(res.data);
           setLoading(false);
@@ -40,10 +43,10 @@ const PaginationBar = ({
   }
 
   function getCurrentPage() {
-    if (selectedApi === "artInstChicago") {
+    if (apiSource === "chicago") {
       return paginationData.current_page;
     }
-    if (selectedApi === "clevelandMuseumArt") {
+    if (apiSource === "cleveland") {
       if (paginationData.parameters.skip === 0) {
         return 1;
       }
@@ -52,10 +55,10 @@ const PaginationBar = ({
   }
 
   function getTotalPages() {
-    if (selectedApi === "artInstChicago") {
+    if (apiSource === "chicago") {
       return paginationData.total_pages;
     }
-    if (selectedApi === "clevelandMuseumArt") {
+    if (apiSource === "cleveland") {
       return Math.ceil(paginationData.total / paginationData.parameters.limit);
     }
   }

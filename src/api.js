@@ -1,12 +1,20 @@
 import axios from "axios";
 
+// Chicago API Functions
+
 const artInstChicagoApi = axios.create({
   baseURL: "https://api.artic.edu/api/v1/artworks",
 });
 
+export const allChicagoArtworks = (page, limit) => {
+  return artInstChicagoApi.get("?fields=id,title,artist_title,image_id", {
+    params: { page, limit },
+  });
+};
+
 export const searchChicagoArtworks = (q, page, limit) => {
   return artInstChicagoApi.get(
-    "/search?fields=id,api_link,title,artist_title,date_start,artwork_type_title,image_id,medium_display",
+    "/search?fields=id,title,artist_title,image_id",
     {
       params: { q, page, limit },
     }
@@ -43,9 +51,17 @@ export const getChicagoArtworkById = (id) => {
   );
 };
 
+// Cleveland API Functions
+
 const clevelandMuseumArtApi = axios.create({
   baseURL: "https://openaccess-api.clevelandart.org/api/artworks",
 });
+
+export const allClevelandArtworks = (skip, limit) => {
+  return clevelandMuseumArtApi.get("/?fields=id,title,creators,images", {
+    params: { skip, limit },
+  });
+};
 
 export const searchClevelandArtworks = (q, skip, limit) => {
   return clevelandMuseumArtApi.get("/?fields=id,title,creators,images", {
