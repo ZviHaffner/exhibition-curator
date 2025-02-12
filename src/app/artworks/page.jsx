@@ -1,6 +1,8 @@
+import ApiSelector from "@/components/ApiSelector"
+
 const Artworks = () => {
   return (
-    <div>Artworks</div>
+    <ApiSelector/>
   )
 }
 

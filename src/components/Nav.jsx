@@ -15,7 +15,7 @@ const Nav = () => {
           <Link href="/">Home</Link>
         </li>
         <li className="flex-1 hover:underline underline-offset-8">
-          <Link href="/search">Search Artworks</Link>
+          <Link href="/artworks">Gallery Explorer</Link>
         </li>
         <li className="flex-1 hover:underline underline-offset-8">
           <Link href="/exhibition">My Exhibition</Link>
@@ -48,7 +48,7 @@ const Nav = () => {
               setIsOpen(!isOpen);
             }}
           >
-            <Link href="/search">Search Artworks</Link>
+            <Link href="/artworks">Gallery Explorer</Link>
           </li>
           <li
             onClick={() => {
