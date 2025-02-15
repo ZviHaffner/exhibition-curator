@@ -1,14 +1,11 @@
-import { ExhibitionArtworksContext } from "@/contexts/ExhibitionArtworksProvider";
+import { useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useContext } from "react";
+import AddArtworkModal from "./AddArtworkModal";
 import { MdOutlineImageNotSupported } from "react-icons/md";
 
 const ArtworkCard = ({ artworks, artwork }) => {
-  const { exhibitionArtworks, setExhibitionArtworks } = useContext(
-    ExhibitionArtworksContext
-  );
-
+  const [isModalOpen, setModalOpen] = useState(false);
   const { apiSource } = useParams();
 
   function getImgSrc() {
@@ -42,39 +39,6 @@ const ArtworkCard = ({ artworks, artwork }) => {
     if (apiSource === "cleveland") return "cleveland";
   }
 
-  function isArtworkAdded() {
-    return exhibitionArtworks.some((savedArtwork) => {
-      if (savedArtwork.id === artwork.id) {
-        return true;
-      }
-      return false;
-    });
-  }
-
-  function handleAddArtwork() {
-    const title =
-      artwork.title.length > 70
-        ? artwork.title.slice(0, 70) + "..."
-        : artwork.title;
-    setExhibitionArtworks([
-      ...exhibitionArtworks,
-      {
-        id: artwork.id,
-        title,
-        artists: getArtists(),
-        image: getImgSrc(),
-        source: assignArtworkSrc(),
-      },
-    ]);
-  }
-
-  function handleRemoveArtwork(e) {
-    const filteredExhibition = exhibitionArtworks.filter((artwork) => {
-      return artwork.id !== Number(e.currentTarget.value);
-    });
-    setExhibitionArtworks(filteredExhibition);
-  }
-
   return (
     <div className="md:flex items-center justify-between bg-white my-8 rounded-3xl shadow-lg transition duration-100 ease-in-out hover:-translate-y-1">
       <Link
@@ -94,22 +58,29 @@ const ArtworkCard = ({ artworks, artwork }) => {
         </div>
         <section className="my-4">
           <p className="text-center md:text-left font-bold">
-            {artwork.title.length > 70
-              ? artwork.title.slice(0, 70) + "..."
+            {artwork.title.length > 40
+              ? artwork.title.slice(0, 40) + "..."
               : artwork.title}
           </p>
           <p className="text-center md:text-left text-sm">{getArtists()}</p>
         </section>
       </Link>
-      <div className="w-full flex justify-center md:w-auto md:mr-10">
+      <div className="w-fit mx-auto md:m-0">
         <button
-          className="mb-4 md:mb-0 py-2 px-4 border rounded-sm shadow-md hover:bg-gray-100"
-          value={artwork.id}
-          onClick={!isArtworkAdded() ? handleAddArtwork : handleRemoveArtwork}
+          onClick={() => setModalOpen(true)}
+          className="mb-4 md:mb-0 md:mr-8 px-3 py-2 bg-gray-400 text-white font-semibold rounded hover:bg-green-500"
         >
-          {!isArtworkAdded() ? "Add to Exhibition" : "Remove from Exhibition"}
+          Save to Exhibition
         </button>
       </div>
+      <AddArtworkModal
+        isOpen={isModalOpen}
+        onRequestClose={() => setModalOpen(false)}
+        artwork={artwork}
+        getImgSrc={getImgSrc}
+        getArtists={getArtists}
+        assignArtworkSrc={assignArtworkSrc}
+      />
     </div>
   );
 };
