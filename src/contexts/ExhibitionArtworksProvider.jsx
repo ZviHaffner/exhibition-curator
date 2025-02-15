@@ -5,7 +5,7 @@ import { createContext, useEffect, useState } from "react";
 export const ExhibitionArtworksContext = createContext();
 
 export default function ExhibitionArtworksProvider({ children }) {
-  const [exhibitionArtworks, setExhibitionArtworks] = useState([]);
+  const [exhibitionArtworks, setExhibitionArtworks] = useState({});
 
   useEffect(() => {
     const savedArtworks = JSON.parse(
