@@ -6,7 +6,7 @@ import { FiMenu, FiX } from "react-icons/fi";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
-  
+
   return (
     <nav className="font-serif text-xl py-2">
       {/* Desktop Nav */}
@@ -18,7 +18,7 @@ const Nav = () => {
           <Link href="/artworks">Gallery Explorer</Link>
         </li>
         <li className="flex-1 hover:underline underline-offset-8">
-          <Link href="/exhibition">My Exhibition</Link>
+          <Link href="/exhibitions">Exhibitions</Link>
         </li>
       </ul>
       {/* Mobile Nav */}
@@ -55,7 +55,7 @@ const Nav = () => {
               setIsOpen(!isOpen);
             }}
           >
-            <Link href="/exhibition">My Exhibition</Link>
+            <Link href="/exhibitions">Exhibitions</Link>
           </li>
         </ul>
       )}
