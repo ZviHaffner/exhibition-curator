@@ -282,7 +282,7 @@ const FiltersChicago = ({ setArtworks, setLoading, setError }) => {
           )}
           <button
             type="submit"
-            className="my-4 mx-auto py-2 px-4 bg-white border rounded-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none"
+            className="my-4 mx-auto py-2 px-4 bg-white border rounded-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={filterTerm === "select"}
           >
             Save
