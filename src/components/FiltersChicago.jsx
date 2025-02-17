@@ -9,8 +9,8 @@ const FiltersChicago = ({ setArtworks, setLoading, setError }) => {
   const [departments, setDepartments] = useState([]);
   const [placesOfOrigin, setPlacesOfOrigin] = useState([]);
 
-  const [selectedFilter, setSelectedFilter] = useState("select");
-  const [filterTerm, setFilterTerm] = useState("select");
+  const [selectedFilter, setSelectedFilter] = useState("");
+  const [filterTerm, setFilterTerm] = useState("");
 
   const [showDropdown, setShowDropdown] = useState(true);
   const [loadingFilters, setLoadingFilters] = useState(true);
@@ -72,7 +72,7 @@ const FiltersChicago = ({ setArtworks, setLoading, setError }) => {
               setFilterTerm(e.target.value);
             }}
           >
-            <option value="select" disabled>
+            <option value="" disabled>
               Select an Option
             </option>
             {loadingFilters ? (
@@ -132,11 +132,11 @@ const FiltersChicago = ({ setArtworks, setLoading, setError }) => {
         className="p-2 mb-4"
         value={selectedFilter}
         onChange={(e) => {
-          setFilterTerm("select");
+          setFilterTerm("");
           setSelectedFilter(e.target.value);
         }}
       >
-        <option value="select" disabled>
+        <option value="" disabled>
           Select an Option
         </option>
         <option value="artist_title">Artist</option>
@@ -145,7 +145,7 @@ const FiltersChicago = ({ setArtworks, setLoading, setError }) => {
         <option value="place_of_origin">Place of Origin</option>
       </select>
 
-      {selectedFilter !== "select" && (
+      {selectedFilter && (
         <>
           {showDropdown ? (
             renderFilterDropdown()
@@ -155,7 +155,7 @@ const FiltersChicago = ({ setArtworks, setLoading, setError }) => {
               <input
                 className="grow focus:outline-none"
                 type="search"
-                value={filterTerm !== "select" ? filterTerm : ""}
+                value={filterTerm}
                 onChange={(e) => setFilterTerm(e.target.value)}
                 placeholder="Filter Term"
               />
@@ -188,7 +188,7 @@ const FiltersChicago = ({ setArtworks, setLoading, setError }) => {
           <button
             type="submit"
             className="my-4 mx-auto py-2 px-4 bg-white border rounded-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={filterTerm === "select"}
+            disabled={!filterTerm}
           >
             Save
           </button>
