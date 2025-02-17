@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import ArtworkCard from "@/components/ArtworkCard";
 import PaginationBar from "@/components/PaginationBar";
 import FiltersChicago from "@/components/FiltersChicago";
@@ -16,6 +16,7 @@ const ArtworkList = ({
 }) => {
   const [showFilters, setShowFilters] = useState(false);
   const { apiSource } = useParams();
+  const searchParams = useSearchParams();
 
   function renderFilters() {
     if (apiSource === "chicago") {
@@ -50,13 +51,13 @@ const ArtworkList = ({
   }
 
   if (artworks.data?.length === 0) {
-    setError({
-      status: 404,
-      detail: "No Artworks Found. Please Try a Different Search Term.",
-    });
-  }
-
-  if (Object.keys(error).length) {
+    return (
+      <div className="text-center">
+        <h2 className="text-lg font-bold">404</h2>
+        <p>{`No Artworks found for search '${searchParams.get("q")}'`}</p>
+      </div>
+    );
+  } else if (Object.keys(error).length) {
     return (
       <div className="text-center">
         <h2 className="text-lg font-bold">{error.status}</h2>
