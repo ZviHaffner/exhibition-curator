@@ -18,32 +18,31 @@ const FiltersChicago = ({ setArtworks, setLoading, setError }) => {
   const searchParams = useSearchParams();
   const query = searchParams.get("q");
 
+  function extractUniqueSortedValues(data, key, fallback) {
+    return [...new Set(data.map((artwork) => artwork[key] || fallback))].sort();
+  }
+
   useEffect(() => {
     populateChicagoFilters(query)
       .then((res) => {
-        const artistsArr = res.data.data.map((artwork) => {
-          return artwork.artist_title || "Unknown Artist";
-        });
-        const uniqueArtistsSet = new Set(artistsArr);
-        setArtists([...uniqueArtistsSet].sort());
+        const data = res.data.data;
 
-        const artworkTypesArr = res.data.data.map((artwork) => {
-          return artwork.artwork_type_title || "Unknown Type";
-        });
-        const uniqueArtworkTypesSet = new Set(artworkTypesArr);
-        setArtworkTypes([...uniqueArtworkTypesSet].sort());
-
-        const departmentsArr = res.data.data.map((artwork) => {
-          return artwork.department_title || "Unknown Department";
-        });
-        const uniqueDepartmentsSet = new Set(departmentsArr);
-        setDepartments([...uniqueDepartmentsSet].sort());
-
-        const originsArr = res.data.data.map((artwork) => {
-          return artwork.place_of_origin || "Unknown Origin";
-        });
-        const uniqueOriginsSet = new Set(originsArr);
-        setPlacesOfOrigin([...uniqueOriginsSet].sort());
+        setArtists(
+          extractUniqueSortedValues(data, "artist_title", "Unknown Artist")
+        );
+        setArtworkTypes(
+          extractUniqueSortedValues(data, "artwork_type_title", "Unknown Type")
+        );
+        setDepartments(
+          extractUniqueSortedValues(
+            data,
+            "department_title",
+            "Unknown Department"
+          )
+        );
+        setPlacesOfOrigin(
+          extractUniqueSortedValues(data, "place_of_origin", "Unknown Origin")
+        );
 
         setLoadingFilters(false);
       })
@@ -54,49 +53,19 @@ const FiltersChicago = ({ setArtworks, setLoading, setError }) => {
   }, []);
 
   function renderFilterDropdown() {
-    if (selectedFilter === "artist_title") {
+    function createFilterDropdown(selectedFilter, dataset) {
       return (
         <>
-          <label htmlFor="artists" className="my-2">
-            Artists
-          </label>
-          <select
-            name="artists"
-            id="artists"
-            className="p-2"
-            value={filterTerm}
-            onChange={(e) => {
-              setFilterTerm(e.target.value);
-            }}
-          >
-            <option value="select" disabled>
-              Select an Artist
-            </option>
-            {loadingFilters ? (
-              <option value="loading" disabled>
-                Loading Options...
-              </option>
-            ) : (
-              artists.map((artist) => {
-                return (
-                  <option value={artist} key={artist}>
-                    {artist}
-                  </option>
-                );
+          <label htmlFor={selectedFilter + "s"} className="my-2">
+            {selectedFilter
+              .split("_")
+              .map((word) => {
+                return word[0].toUpperCase() + word.slice(1);
               })
-            )}
-          </select>
-        </>
-      );
-    } else if (selectedFilter === "artwork_type_title") {
-      return (
-        <>
-          <label htmlFor="artworkTypes" className="my-2">
-            Artwork Type
+              .join(" ")}
           </label>
           <select
-            name="artworkTypes"
-            id="artworkTypes"
+            id={selectedFilter + "s"}
             className="p-2"
             value={filterTerm}
             onChange={(e) => {
@@ -104,85 +73,17 @@ const FiltersChicago = ({ setArtworks, setLoading, setError }) => {
             }}
           >
             <option value="select" disabled>
-              Select a Type
+              Select an Option
             </option>
             {loadingFilters ? (
               <option value="loading" disabled>
                 Loading Options...
               </option>
             ) : (
-              artworkTypes.map((artworkType) => {
+              dataset.map((data) => {
                 return (
-                  <option value={artworkType} key={artworkType}>
-                    {artworkType}
-                  </option>
-                );
-              })
-            )}
-          </select>
-        </>
-      );
-    } else if (selectedFilter === "department_title") {
-      return (
-        <>
-          <label htmlFor="departments" className="my-2">
-            Departments
-          </label>
-          <select
-            name="departments"
-            id="departments"
-            className="p-2"
-            value={filterTerm}
-            onChange={(e) => {
-              setFilterTerm(e.target.value);
-            }}
-          >
-            <option value="select" disabled>
-              Select a Department
-            </option>
-            {loadingFilters ? (
-              <option value="loading" disabled>
-                Loading Options...
-              </option>
-            ) : (
-              departments.map((department) => {
-                return (
-                  <option value={department} key={department}>
-                    {department}
-                  </option>
-                );
-              })
-            )}
-          </select>
-        </>
-      );
-    } else if (selectedFilter === "place_of_origin") {
-      return (
-        <>
-          <label htmlFor="placesOfOrigin" className="my-2">
-            Places of Origin
-          </label>
-          <select
-            name="placesOfOrigin"
-            id="placesOfOrigin"
-            className="p-2"
-            value={filterTerm}
-            onChange={(e) => {
-              setFilterTerm(e.target.value);
-            }}
-          >
-            <option value="select" disabled>
-              Select a Place of Origin
-            </option>
-            {loadingFilters ? (
-              <option value="loading" disabled>
-                Loading Options...
-              </option>
-            ) : (
-              placesOfOrigin.map((origin) => {
-                return (
-                  <option value={origin} key={origin}>
-                    {origin}
+                  <option value={data} key={data}>
+                    {data}
                   </option>
                 );
               })
@@ -191,18 +92,22 @@ const FiltersChicago = ({ setArtworks, setLoading, setError }) => {
         </>
       );
     }
+
+    if (selectedFilter === "artist_title") {
+      return createFilterDropdown(selectedFilter, artists);
+    } else if (selectedFilter === "artwork_type_title") {
+      return createFilterDropdown(selectedFilter, artworkTypes);
+    } else if (selectedFilter === "department_title") {
+      return createFilterDropdown(selectedFilter, departments);
+    } else if (selectedFilter === "place_of_origin") {
+      return createFilterDropdown(selectedFilter, placesOfOrigin);
+    }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
-    searchChicagoArtworksWithFilter(
-      query,
-      1,
-      10,
-      selectedFilter,
-      filterTerm
-    )
+    searchChicagoArtworksWithFilter(query, 1, 10, selectedFilter, filterTerm)
       .then((res) => {
         setArtworks(res.data);
         setLoading(false);
