@@ -1,15 +1,9 @@
-import {
-  populateClevelandArtistFilter,
-  searchClevelandArtworksWithFilter,
-} from "@/api";
-import { useSearchParams } from "next/navigation";
+import { populateClevelandArtistFilter } from "@/api";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { CiSearch } from "react-icons/ci";
 
-const FiltersCleveland = ({
-  setArtworks,
-  setLoading,
-  setError,
-}) => {
+const FiltersCleveland = () => {
   const departments = [
     "African Art",
     "American Painting and Sculpture",
@@ -110,16 +104,18 @@ const FiltersCleveland = ({
 
   const [artists, setArtists] = useState([]);
   const [loadingArtists, setLoadingArtists] = useState(true);
+  const [showDropdown, setShowDropdown] = useState(true);
   const [creationDatesErr, setCreationDatesErr] = useState("");
 
-  const [artist, setArtist] = useState("select");
-  const [department, setDepartment] = useState("select");
-  const [type, setType] = useState("select");
+  const [artist, setArtist] = useState("");
+  const [department, setDepartment] = useState("");
+  const [type, setType] = useState("");
   const [createdBefore, setCreatedBefore] = useState("");
   const [createdAfter, setCreatedAfter] = useState("");
 
   const searchParams = useSearchParams();
-    const query = searchParams.get("q");
+  const query = searchParams.get("q");
+  const router = useRouter();
 
   useEffect(() => {
     populateClevelandArtistFilter(query)
@@ -146,21 +142,15 @@ const FiltersCleveland = ({
   }, []);
 
   function isDisabled() {
-    if (
-      artist !== "select" ||
-      department !== "select" ||
-      type !== "select" ||
-      createdBefore ||
-      createdAfter
-    )
+    if (artist || department || type || createdBefore || createdAfter)
       return false;
     else return true;
   }
 
   function handleReset() {
-    setArtist("select");
-    setDepartment("select");
-    setType("select");
+    setArtist("");
+    setDepartment("");
+    setType("");
     setCreatedBefore("");
     setCreatedAfter("");
     setCreationDatesErr("");
@@ -181,25 +171,24 @@ const FiltersCleveland = ({
     }
 
     if (isValid) {
-      setLoading(true);
-      searchClevelandArtworksWithFilter(
-        query,
-        artist === "select" ? null : artist,
-        department === "select" ? null : department,
-        type === "select" ? null : type,
-        createdBefore === "" ? null : createdBefore,
-        createdAfter === "" ? null : createdAfter,
-        0,
-        10
-      )
-        .then((res) => {
-          setArtworks(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          setLoading(false);
-        });
+      const params = new URLSearchParams(searchParams.toString());
+      artist
+        ? params.set("artist_title", artist)
+        : params.delete("artist_title");
+      department
+        ? params.set("department_title", department)
+        : params.delete("department_title");
+      type
+        ? params.set("artwork_type_title", type)
+        : params.delete("artwork_type_title");
+      createdBefore
+        ? params.set("created_before", createdBefore)
+        : params.delete("created_before");
+      createdAfter
+        ? params.set("created_after", createdAfter)
+        : params.delete("created_after");
+      params.delete("page");
+      router.push(`?${params.toString()}`);
     }
   }
 
@@ -208,41 +197,81 @@ const FiltersCleveland = ({
       className="flex flex-col min-w-72 md:pr-5 md:mr-5 md:border-r"
       onSubmit={handleSubmit}
     >
-      <label htmlFor="artists" className="my-2">
-        Artists
-      </label>
-      <select
-        name="artists"
-        id="artists"
-        value={artist}
-        className="p-2"
-        onChange={(e) => {
-          setArtist(e.target.value);
-        }}
-      >
-        <option value="select" disabled>
-          Select an Artist
-        </option>
-        {loadingArtists ? (
-          <option value="loading" disabled>
-            Loading Options...
-          </option>
-        ) : (
-          artists.map((artist) => {
-            return (
-              <option value={artist} key={artist}>
-                {artist}
+      {showDropdown ? (
+        <>
+          <label htmlFor="artists" className="my-2">
+            Artist
+          </label>
+          <select
+            id="artists"
+            value={artist}
+            className="p-2"
+            onChange={(e) => {
+              setArtist(e.target.value);
+            }}
+          >
+            <option value="" disabled>
+              Select an Artist
+            </option>
+            {loadingArtists ? (
+              <option value="loading" disabled>
+                Loading Options...
               </option>
-            );
-          })
-        )}
-      </select>
+            ) : (
+              artists.map((artist) => {
+                return (
+                  <option value={artist} key={artist}>
+                    {artist}
+                  </option>
+                );
+              })
+            )}
+          </select>
+        </>
+      ) : (
+        <>
+          <p className="my-2">Artist</p>
+          <div className="flex gap-5 p-1 bg-white border rounded-sm">
+            <CiSearch className="text-3xl text-gray-500" />
+            <input
+              className="grow focus:outline-none"
+              type="search"
+              value={artist}
+              onChange={(e) => setArtist(e.target.value)}
+              placeholder="Artist"
+            />
+          </div>
+        </>
+      )}
+      {showDropdown ? (
+        <p className="text-gray-600 text-xs text-center my-2">
+          Cannot Find What You are Looking For?{" "}
+          <button
+            type="button"
+            className="hover:underline"
+            onClick={() => {
+              setShowDropdown(!showDropdown);
+            }}
+          >
+            Input Manually
+          </button>
+        </p>
+      ) : (
+        <button
+          type="button"
+          className="text-gray-600 text-xs my-2 hover:underline"
+          onClick={() => {
+            setShowDropdown(!showDropdown);
+          }}
+        >
+          Show Dropdown List
+        </button>
+      )}
 
       <label htmlFor="departments" className="my-2">
         Department
       </label>
       <select
-        name="departments"
         id="departments"
         value={department}
         className="p-2"
@@ -250,7 +279,7 @@ const FiltersCleveland = ({
           setDepartment(e.target.value);
         }}
       >
-        <option value="select" disabled>
+        <option value="" disabled>
           Select a Department
         </option>
         {departments.map((department) => {
@@ -266,7 +295,6 @@ const FiltersCleveland = ({
         Artwork Type
       </label>
       <select
-        name="types"
         id="types"
         value={type}
         className="p-2"
@@ -274,7 +302,7 @@ const FiltersCleveland = ({
           setType(e.target.value);
         }}
       >
-        <option value="select" disabled>
+        <option value="" disabled>
           Select an Artwork Type
         </option>
         {types.map((type) => {
@@ -285,6 +313,7 @@ const FiltersCleveland = ({
           );
         })}
       </select>
+
       <h3 className="my-2">Date</h3>
       <div className="flex justify-between">
         <input
@@ -293,7 +322,6 @@ const FiltersCleveland = ({
           }`}
           type="number"
           id="created_after"
-          name="created_after"
           placeholder="After"
           value={createdAfter}
           onChange={(e) => {
@@ -308,7 +336,6 @@ const FiltersCleveland = ({
           }`}
           type="number"
           id="created_before"
-          name="created_before"
           placeholder="Before"
           value={createdBefore}
           onChange={(e) => {

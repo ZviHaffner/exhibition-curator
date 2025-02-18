@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { searchChicagoArtworks, searchClevelandArtworks } from "@/api";
 import { CiSearch } from "react-icons/ci";
 
-const SearchBar = ({ setArtworks, setLoading, setError }) => {
+const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const router = useRouter();
@@ -11,38 +10,8 @@ const SearchBar = ({ setArtworks, setLoading, setError }) => {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const query = searchParams.get("q") || "";
-    if (query) {
-      setSearchTerm(query);
-      setError({});
-      setLoading(true);
-      if (apiSource === "chicago") {
-        searchChicagoArtworks(query)
-          .then((res) => {
-            setArtworks(res.data);
-            setLoading(false);
-          })
-          .catch((err) => {
-            setLoading(false);
-            setError(err.response.data);
-          });
-      }
-      if (apiSource === "cleveland") {
-        searchClevelandArtworks(query, 0, 10)
-          .then((res) => {
-            setArtworks(res.data);
-            setLoading(false);
-          })
-          .catch((err) => {
-            setLoading(false);
-            setError({
-              status: err.response.status,
-              detail: err.response.data.detail[0].msg,
-            });
-          });
-      }
-    }
-  }, [searchParams]);
+    setSearchTerm(searchParams.get("q") || "");
+  }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
