@@ -1,12 +1,9 @@
-import {
-  populateClevelandArtistFilter,
-  searchClevelandArtworksWithFilter,
-} from "@/api";
-import { useSearchParams } from "next/navigation";
+import { populateClevelandArtistFilter } from "@/api";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 
-const FiltersCleveland = ({ setArtworks, setLoading, setError }) => {
+const FiltersCleveland = () => {
   const departments = [
     "African Art",
     "American Painting and Sculpture",
@@ -118,6 +115,7 @@ const FiltersCleveland = ({ setArtworks, setLoading, setError }) => {
 
   const searchParams = useSearchParams();
   const query = searchParams.get("q");
+  const router = useRouter();
 
   useEffect(() => {
     populateClevelandArtistFilter(query)
@@ -173,25 +171,24 @@ const FiltersCleveland = ({ setArtworks, setLoading, setError }) => {
     }
 
     if (isValid) {
-      setLoading(true);
-      searchClevelandArtworksWithFilter(
-        query === "" ? null : query,
-        artist === "" ? null : artist,
-        department === "" ? null : department,
-        type === "" ? null : type,
-        createdBefore === "" ? null : createdBefore,
-        createdAfter === "" ? null : createdAfter,
-        0,
-        10
-      )
-        .then((res) => {
-          setArtworks(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          setLoading(false);
-        });
+      const params = new URLSearchParams(searchParams.toString());
+      artist
+        ? params.set("artist_title", artist)
+        : params.delete("artist_title");
+      department
+        ? params.set("department_title", department)
+        : params.delete("department_title");
+      type
+        ? params.set("artwork_type_title", type)
+        : params.delete("artwork_type_title");
+      createdBefore
+        ? params.set("created_before", createdBefore)
+        : params.delete("created_before");
+      createdAfter
+        ? params.set("created_after", createdAfter)
+        : params.delete("created_after");
+      params.delete("page");
+      router.push(`?${params.toString()}`);
     }
   }
 

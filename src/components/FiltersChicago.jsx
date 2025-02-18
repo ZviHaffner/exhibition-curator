@@ -1,9 +1,9 @@
-import { populateChicagoFilters, searchChicagoArtworksWithFilter } from "@/api";
-import { useSearchParams } from "next/navigation";
+import { populateChicagoFilters } from "@/api";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 
-const FiltersChicago = ({ setArtworks, setLoading, setError }) => {
+const FiltersChicago = () => {
   const [artists, setArtists] = useState([]);
   const [artworkTypes, setArtworkTypes] = useState([]);
   const [departments, setDepartments] = useState([]);
@@ -17,6 +17,7 @@ const FiltersChicago = ({ setArtworks, setLoading, setError }) => {
 
   const searchParams = useSearchParams();
   const query = searchParams.get("q");
+  const router = useRouter();
 
   function extractUniqueSortedValues(data, key, fallback) {
     return [...new Set(data.map((artwork) => artwork[key] || fallback))].sort();
@@ -106,16 +107,9 @@ const FiltersChicago = ({ setArtworks, setLoading, setError }) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    setLoading(true);
-    searchChicagoArtworksWithFilter(query, 1, 10, selectedFilter, filterTerm)
-      .then((res) => {
-        setArtworks(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
+    query
+      ? router.push(`?q=${query}&${selectedFilter}=${filterTerm}`)
+      : router.push(`?${selectedFilter}=${filterTerm}`);
   }
 
   return (

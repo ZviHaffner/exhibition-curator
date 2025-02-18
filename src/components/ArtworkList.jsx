@@ -7,35 +7,17 @@ import FiltersCleveland from "@/components/FiltersCleveland";
 import { BsSliders } from "react-icons/bs";
 import { FiX } from "react-icons/fi";
 
-const ArtworkList = ({
-  artworks,
-  setArtworks,
-  setLoading,
-  error,
-  setError,
-}) => {
+const ArtworkList = ({ artworks, error, isFiltered }) => {
   const [showFilters, setShowFilters] = useState(false);
   const { apiSource } = useParams();
   const searchParams = useSearchParams();
 
   function renderFilters() {
     if (apiSource === "chicago") {
-      return (
-        <FiltersChicago
-          setArtworks={setArtworks}
-          setLoading={setLoading}
-          setError={setError}
-        />
-      );
+      return <FiltersChicago />;
     }
     if (apiSource === "cleveland") {
-      return (
-        <FiltersCleveland
-          setArtworks={setArtworks}
-          setLoading={setLoading}
-          setError={setError}
-        />
-      );
+      return <FiltersCleveland />;
     }
   }
 
@@ -53,8 +35,11 @@ const ArtworkList = ({
   if (artworks.data?.length === 0) {
     return (
       <div className="text-center">
-        <h2 className="text-lg font-bold">404</h2>
-        <p>{`No Artworks found for search '${searchParams.get("q")}'`}</p>
+        <h2 className="text-3xl font-bold font-serif">404</h2>
+        <br />
+        <p>{`No Artworks Found for Search '${searchParams.get("q")}'${
+          isFiltered ? " or your Chosen Filters" : ""
+        }`}</p>
       </div>
     );
   } else if (Object.keys(error).length) {
@@ -111,9 +96,6 @@ const ArtworkList = ({
                 })}
               <PaginationBar
                 paginationData={artworks.pagination || artworks.info}
-                setArtworks={setArtworks}
-                setLoading={setLoading}
-                setError={setError}
               />
             </div>
           </div>

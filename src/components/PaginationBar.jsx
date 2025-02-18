@@ -1,45 +1,17 @@
-import { searchChicagoArtworks, searchClevelandArtworks } from "@/api";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { VscEllipsis } from "react-icons/vsc";
 
 const PaginationBar = ({
-  paginationData,
-  setArtworks,
-  setLoading,
-  setError,
+  paginationData
 }) => {
   const { apiSource } = useParams();
   const searchParams = useSearchParams();
-  const query = searchParams.get("q");
+  const router = useRouter();
 
   function handleClick(e) {
-    setError({});
-    setLoading(true);
-    if (apiSource === "chicago") {
-      searchChicagoArtworks(query, e.target.value, 10)
-        .then((res) => {
-          setArtworks(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          setLoading(false);
-          setError(err.response.data);
-        });
-    }
-    if (apiSource === "cleveland") {
-      searchClevelandArtworks(query, (e.target.value - 1) * 10, 10)
-        .then((res) => {
-          setArtworks(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          setLoading(false);
-          setError({
-            status: err.response.status,
-            detail: err.response.data.detail[0].msg,
-          });
-        });
-    }
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", e.target.value);
+    router.push(`?${params.toString()}`);
   }
 
   function getCurrentPage() {

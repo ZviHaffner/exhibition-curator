@@ -4,8 +4,14 @@ import { useEffect, useState } from "react";
 import ArtworkList from "@/components/ArtworkList";
 import SearchBar from "@/components/SearchBar";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { notFound, useParams } from "next/navigation";
-import { allChicagoArtworks, allClevelandArtworks } from "@/api";
+import { notFound, useParams, useSearchParams } from "next/navigation";
+import {
+  allChicagoArtworks,
+  allClevelandArtworks,
+  searchChicagoArtworks,
+  searchChicagoArtworksWithFilter,
+  searchClevelandArtworks,
+} from "@/api";
 import Link from "next/link";
 
 const Search = () => {
@@ -14,36 +20,126 @@ const Search = () => {
   const [error, setError] = useState({});
 
   const { apiSource } = useParams();
+  const searchParams = useSearchParams();
+
+  const query = searchParams.get("q") || "";
+  const paramsObject = Object.fromEntries(searchParams.entries());
+  const paramsKeys = Object.keys(paramsObject);
+
+  function checkIfFilter() {
+    return paramsKeys.some((filterSubject) => {
+      return (
+        filterSubject === "artist_title" ||
+        filterSubject === "artwork_type_title" ||
+        filterSubject === "department_title" ||
+        filterSubject === "place_of_origin" ||
+        filterSubject === "created_before" ||
+        filterSubject === "created_after"
+      );
+    });
+  }
+
+  function getChicagoFilterSubject() {
+    return paramsKeys.find((filterSubject) => {
+      return (
+        filterSubject === "artist_title" ||
+        filterSubject === "artwork_type_title" ||
+        filterSubject === "department_title" ||
+        filterSubject === "place_of_origin" ||
+        filterSubject === "created_before" ||
+        filterSubject === "created_after"
+      );
+    });
+  }
 
   useEffect(() => {
     setError({});
     setLoading(true);
-    if (apiSource === "chicago") {
-      allChicagoArtworks(0, 10)
-        .then((res) => {
-          setArtworks(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          setLoading(false);
-          setError(err.response.data);
-        });
+    if (!query && !checkIfFilter()) {
+      if (apiSource === "chicago") {
+        allChicagoArtworks(paramsObject.page ? paramsObject.page : 1, 10)
+          .then((res) => setArtworks(res.data))
+          .catch((err) =>
+            setError(
+              err.response?.data || { status: 500, detail: "Unexpected error" }
+            )
+          )
+          .finally(() => setLoading(false));
+      }
+      if (apiSource === "cleveland") {
+        allClevelandArtworks(
+          paramsObject.page ? (paramsObject.page - 1) * 10 : 0,
+          10
+        )
+          .then((res) => setArtworks(res.data))
+          .catch((err) =>
+            setError({
+              status: err.response.status,
+              detail: err.response.data.detail[0].msg,
+            })
+          )
+          .finally(() => setLoading(false));
+      }
+    } else if (query && !checkIfFilter()) {
+      if (apiSource === "chicago") {
+        searchChicagoArtworks(query)
+          .then((res) => setArtworks(res.data))
+          .catch((err) => {
+            setError(
+              err.response?.data || { status: 500, detail: "Unexpected error" }
+            );
+          })
+          .finally(() => setLoading(false));
+      }
+      if (apiSource === "cleveland") {
+        searchClevelandArtworks(
+          query,
+          paramsObject.page ? (paramsObject.page - 1) * 10 : 0,
+          10
+        )
+          .then((res) => setArtworks(res.data))
+          .catch((err) => {
+            setError({
+              status: err.response.status,
+              detail: err.response.data.detail[0].msg,
+            });
+          })
+          .finally(() => setLoading(false));
+      }
+    } else if (checkIfFilter()) {
+      if (apiSource === "chicago") {
+        searchChicagoArtworksWithFilter(
+          query,
+          paramsObject.page ? paramsObject.page : 1,
+          10,
+          getChicagoFilterSubject(),
+          paramsObject[getChicagoFilterSubject()]
+        )
+          .then((res) => setArtworks(res.data))
+          .catch((err) => {
+            setError(
+              err.response?.data || { status: 500, detail: "Unexpected error" }
+            );
+          })
+          .finally(() => setLoading(false));
+      }
+      if (apiSource === "cleveland") {
+        searchClevelandArtworks(
+          query,
+          paramsObject.page ? (paramsObject.page - 1) * 10 : 0,
+          10,
+          paramsObject.artist_title,
+          paramsObject.department_title,
+          paramsObject.artwork_type_title,
+          paramsObject.created_before,
+          paramsObject.created_after
+        )
+          .then((res) => setArtworks(res.data))
+          .catch((err) => console.log(err))
+          .finally(() => setLoading(false));
+      }
     }
-    if (apiSource === "cleveland") {
-      allClevelandArtworks(0, 10)
-        .then((res) => {
-          setArtworks(res.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          setLoading(false);
-          setError({
-            status: err.response.status,
-            detail: err.response.data.detail[0].msg,
-          });
-        });
-    }
-  }, []);
+  }, [searchParams]);
 
   if (apiSource !== "chicago" && apiSource !== "cleveland") notFound();
 
@@ -79,21 +175,11 @@ const Search = () => {
           }
         </p>
       </Link>
-      <SearchBar
-        setArtworks={setArtworks}
-        setLoading={setLoading}
-        setError={setError}
-      />
+      <SearchBar />
       {loading ? (
         <LoadingSpinner />
       ) : (
-        <ArtworkList
-          artworks={artworks}
-          setArtworks={setArtworks}
-          setLoading={setLoading}
-          error={error}
-          setError={setError}
-        />
+        <ArtworkList artworks={artworks} error={error} isFiltered={checkIfFilter()} />
       )}
     </div>
   );
