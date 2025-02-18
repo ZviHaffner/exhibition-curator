@@ -63,39 +63,33 @@ export const allClevelandArtworks = (skip, limit) => {
   });
 };
 
-export const searchClevelandArtworks = (q, skip, limit) => {
+export const searchClevelandArtworks = (
+  q,
+  skip,
+  limit,
+  artists,
+  department,
+  type,
+  created_before,
+  created_after
+) => {
   return clevelandMuseumArtApi.get("/?fields=id,title,creators,images", {
-    params: { q, skip, limit },
+    params: {
+      q,
+      skip,
+      limit,
+      artists,
+      department,
+      type,
+      created_before,
+      created_after,
+    },
   });
 };
 
 export const populateClevelandArtistFilter = (q) => {
   return clevelandMuseumArtApi.get("/?fields=creators", {
     params: { q },
-  });
-};
-
-export const searchClevelandArtworksWithFilter = (
-  q,
-  artists,
-  department,
-  type,
-  created_before,
-  created_after,
-  skip,
-  limit
-) => {
-  return clevelandMuseumArtApi.get("/?fields=id,title,creators,images", {
-    params: {
-      q,
-      artists,
-      department,
-      type,
-      created_before,
-      created_after,
-      skip,
-      limit,
-    },
   });
 };
 
