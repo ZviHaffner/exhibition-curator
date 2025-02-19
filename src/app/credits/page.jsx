@@ -1,7 +1,7 @@
 const Credits = () => {
   return (
     <div className="bg-white border-y">
-      <div className="w-1/2 mx-auto pt-8">
+      <div className="w-11/12 md:w-1/2 mx-auto pt-8">
         <h1 className="text-center font-serif text-3xl">
           Credits & Attributions
         </h1>
