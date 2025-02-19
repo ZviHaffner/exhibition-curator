@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { ExhibitionArtworksContext } from "@/contexts/ExhibitionArtworksProvider";
 import Modal from "react-modal";
 import { MdOutlineImageNotSupported } from "react-icons/md";
+import { useParams } from "next/navigation";
 
 const AddArtworkModal = ({
   isOpen,
@@ -9,7 +10,6 @@ const AddArtworkModal = ({
   artwork,
   getImgSrc,
   getArtists,
-  assignArtworkSrc,
 }) => {
   const { exhibitionArtworks, setExhibitionArtworks } = useContext(
     ExhibitionArtworksContext
@@ -18,6 +18,8 @@ const AddArtworkModal = ({
   const [chosenExhibition, setChosenExhibition] = useState("");
   const [showTextInput, setShowTextInput] = useState(true);
   const [error, setError] = useState("");
+
+  const { apiSource } = useParams();
 
   useEffect(() => {
     Object.keys(exhibitionArtworks).length
@@ -51,7 +53,7 @@ const AddArtworkModal = ({
                 title,
                 artists: getArtists(),
                 image: getImgSrc(),
-                source: assignArtworkSrc(),
+                source: apiSource,
               },
             ]
           : [
@@ -60,7 +62,7 @@ const AddArtworkModal = ({
                 title,
                 artists: getArtists(),
                 image: getImgSrc(),
-                source: assignArtworkSrc(),
+                source: apiSource,
               },
             ];
         return {

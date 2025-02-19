@@ -18,7 +18,6 @@ const Exhibition = () => {
           return (
             <ExhibitionCard
               key={exhibitionName}
-              exhibitionArtworks={exhibitionArtworks}
               exhibitionName={exhibitionName}
             />
           );
