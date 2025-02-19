@@ -101,7 +101,7 @@ const AddArtworkModal = ({
       ) : (
         <MdOutlineImageNotSupported className="mx-auto mt-12 mb-4 text-gray-300 size-20" />
       )}
-      <p className="my-2 font-serif text-center">{artwork.title}</p>
+      <p className="px-4 my-2 font-serif text-center">{artwork.title}</p>
       <h2 className="mt-4 text-center font-serif text-xl">Add to Exhibition</h2>
       <form>
         <div className="text-center mt-2">

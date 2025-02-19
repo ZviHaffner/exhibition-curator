@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const ApiSelector = () => {
   return (
-    <div className="mx-auto w-11/12 md:w-2/3">
+    <div className="mx-auto w-11/12 md:w-4/5 lg:w-2/3">
       <h1 className="mt-8 text-center text-2xl font-serif">
         Please Select a Source to Search From
       </h1>

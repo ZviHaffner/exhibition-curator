@@ -36,7 +36,7 @@ export default function Home() {
         </a>{" "}
         (licensed under CC BY-SA 4.0).
       </p>
-      <div className="md:h-[calc(100vh-6rem)] mx-auto w-11/12 md:w-2/3">
+      <div className="mx-auto w-11/12 md:w-4/5 lg:w-2/3">
         <h2 className="my-8 text-center text-3xl font-serif">
           Artwork Sources
         </h2>
