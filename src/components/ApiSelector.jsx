@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const ApiSelector = () => {
@@ -8,9 +9,11 @@ const ApiSelector = () => {
       </h1>
       <div className="my-8 md:flex justify-around">
         <div className="md:w-1/3 my-8 md:my-0 pb-2 md:pb-0 bg-white text-center rounded-3xl shadow-lg transition duration-100 ease-in-out hover:-translate-y-1">
-          <img
+          <Image
             src="https://upload.wikimedia.org/wikipedia/commons/5/51/20070622_Art_Institute_of_Chicago_Front_View.JPG"
             alt="Art Institute of Chicago"
+            width={500}
+            height={500}
             className="w-full h-48 object-cover rounded-t-3xl"
           />
           <p className="text-gray-400 text-xs">
@@ -33,10 +36,13 @@ const ApiSelector = () => {
           </Link>
         </div>
         <div className="md:w-1/3 my-8 md:my-0 pb-2 md:pb-0 bg-white text-center rounded-3xl shadow-lg transition duration-100 ease-in-out hover:-translate-y-1">
-          <img
+          <Image
             src="https://upload.wikimedia.org/wikipedia/commons/5/52/Cleveland_Museum_of_Art.jpg"
             alt="Cleveland Museum of Art"
+            width={500}
+            height={500}
             className="w-full h-48 object-cover rounded-t-3xl"
+            unoptimized
           />
           <p className="text-gray-400 text-xs">
             Image:{" "}
