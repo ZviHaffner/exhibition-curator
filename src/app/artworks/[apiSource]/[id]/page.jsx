@@ -1,6 +1,7 @@
 "use client";
 
 import { getChicagoArtworkById, getClevelandArtworkById } from "@/api";
+import AddArtworkModal from "@/components/AddArtworkModal";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,6 +9,7 @@ import { MdOutlineImageNotSupported } from "react-icons/md";
 
 const Artwork = () => {
   const [artwork, setArtwork] = useState({});
+  const [isModalOpen, setModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState({});
   const { apiSource, id } = useParams();
@@ -26,7 +28,7 @@ const Artwork = () => {
     getArtworkApiHandler()
       .then(({ data }) => {
         setLoading(false);
-        setArtwork(data);
+        setArtwork(data.data);
       })
       .catch((err) => {
         setLoading(false);
@@ -46,19 +48,19 @@ const Artwork = () => {
   }, []);
 
   function getImgSrc() {
-    if (artwork.data.image_id && artwork.config?.iiif_url) {
-      return `${artwork.config.iiif_url}/${artwork.data.image_id}/full/843,/0/default.jpg`;
+    if (artwork.image_id && artwork.config?.iiif_url) {
+      return `${artwork.config.iiif_url}/${artwork.image_id}/full/843,/0/default.jpg`;
     }
-    if (artwork.data?.images?.web?.url) {
-      return artwork.data.images.web.url;
+    if (artwork.images?.web?.url) {
+      return artwork.images.web.url;
     }
     return null;
   }
 
   const getArtists = () => {
-    if (artwork.data?.artist_display) return artwork.data.artist_display;
-    if (artwork.data?.creators) {
-      return artwork.data.creators
+    if (artwork.artist_display) return artwork.artist_display;
+    if (artwork.creators) {
+      return artwork.creators
         .map((artist) => artist.description || "Unknown Artist")
         .join(", ");
     }
@@ -81,7 +83,7 @@ const Artwork = () => {
       {getImgSrc() ? (
         <img
           src={getImgSrc()}
-          alt={artwork.data?.title || "Artwork"}
+          alt={artwork.title || "Artwork"}
           className="my-4 md:my-10 mx-auto w-11/12 md:w-1/4"
         />
       ) : (
@@ -90,17 +92,34 @@ const Artwork = () => {
       <div className="bg-white">
         <div className="py-10 mx-auto w-11/12 md:w-1/2 text-lg">
           <hr className="mb-4" />
-          <h1 className="font-serif text-4xl mb-8">{artwork.data.title}</h1>
-          <p className="mb-8">
-            {artwork.data.date_display || artwork.data.date_text}
-          </p>
-          <p className="mb-8">{getArtists()}</p>
+          <div className="md:flex justify-between items-start">
+            <div>
+              <h1 className="font-serif text-4xl mb-8">{artwork.title}</h1>
+              <p className="mb-8">{artwork.date_display || artwork.date_text}</p>
+              <p className="mb-8">{getArtists()}</p>
+            </div>
+            <div className="w-fit mx-auto my-4 md:m-0">
+              <button
+                onClick={() => setModalOpen(true)}
+                className="px-3 py-2 border-2 border-gray-500 rounded hover:bg-green-500 hover:border-green-500 hover:text-white"
+              >
+                Save to Exhibition
+              </button>
+            </div>
+          </div>
           <article
             className="font-light [&>p]:mb-4"
-            dangerouslySetInnerHTML={{ __html: artwork.data.description }}
+            dangerouslySetInnerHTML={{ __html: artwork.description }}
           />
         </div>
       </div>
+      <AddArtworkModal
+        isOpen={isModalOpen}
+        onRequestClose={() => setModalOpen(false)}
+        artwork={artwork}
+        getImgSrc={getImgSrc}
+        getArtists={getArtists}
+      />
     </div>
   );
 };
