@@ -9,11 +9,12 @@ import { MdOutlineImageNotSupported } from "react-icons/md";
 
 const Artwork = () => {
   const [artwork, setArtwork] = useState({});
+  const [config, setConfig] = useState({});
   const [isModalOpen, setModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState({});
   const { apiSource, id } = useParams();
-
+  
   function getArtworkApiHandler() {
     if (apiSource === "chicago") {
       return getChicagoArtworkById(id);
@@ -23,12 +24,13 @@ const Artwork = () => {
     }
     return null;
   }
-
+  
   useEffect(() => {
     getArtworkApiHandler()
-      .then(({ data }) => {
+    .then(({ data }) => {
         setLoading(false);
         setArtwork(data.data);
+        setConfig(data.config)
       })
       .catch((err) => {
         setLoading(false);
@@ -48,8 +50,8 @@ const Artwork = () => {
   }, []);
 
   function getImgSrc() {
-    if (artwork.image_id && artwork.config?.iiif_url) {
-      return `${artwork.config.iiif_url}/${artwork.image_id}/full/843,/0/default.jpg`;
+    if (artwork.image_id && config?.iiif_url) {
+      return `${config.iiif_url}/${artwork.image_id}/full/843,/0/default.jpg`;
     }
     if (artwork.images?.web?.url) {
       return artwork.images.web.url;
@@ -90,7 +92,7 @@ const Artwork = () => {
         <MdOutlineImageNotSupported className="my-10 m-auto text-gray-300 size-52" />
       )}
       <div className="bg-white">
-        <div className="py-10 mx-auto w-11/12 md:w-1/2 text-lg">
+        <div className="py-10 mx-auto w-11/12 md:w-4/5 lg:w-1/2 text-lg">
           <hr className="mb-4" />
           <div className="md:flex justify-between items-start">
             <div>
