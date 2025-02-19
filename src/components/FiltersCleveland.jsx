@@ -102,18 +102,27 @@ const FiltersCleveland = () => {
 
   const thisYear = new Date().getFullYear();
 
+  const searchParams = useSearchParams();
+
   const [artists, setArtists] = useState([]);
   const [loadingArtists, setLoadingArtists] = useState(true);
   const [showDropdown, setShowDropdown] = useState(true);
   const [creationDatesErr, setCreationDatesErr] = useState("");
 
-  const [artist, setArtist] = useState("");
-  const [department, setDepartment] = useState("");
-  const [type, setType] = useState("");
-  const [createdBefore, setCreatedBefore] = useState("");
-  const [createdAfter, setCreatedAfter] = useState("");
+  const [artist, setArtist] = useState(searchParams.get("artist_title") || "");
+  const [department, setDepartment] = useState(
+    searchParams.get("department_title") || ""
+  );
+  const [type, setType] = useState(
+    searchParams.get("artwork_type_title") || ""
+  );
+  const [createdBefore, setCreatedBefore] = useState(
+    searchParams.get("created_before") || ""
+  );
+  const [createdAfter, setCreatedAfter] = useState(
+    searchParams.get("created_after") || ""
+  );
 
-  const searchParams = useSearchParams();
   const query = searchParams.get("q");
   const router = useRouter();
 

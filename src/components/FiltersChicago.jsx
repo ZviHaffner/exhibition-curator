@@ -4,18 +4,37 @@ import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 
 const FiltersChicago = () => {
+  const searchParams = useSearchParams();
+  const paramsKeys = Array.from(searchParams.keys());
+
+  function getChicagoFilterSubject() {
+    return paramsKeys.find((filterSubject) => {
+      return (
+        filterSubject === "artist_title" ||
+        filterSubject === "artwork_type_title" ||
+        filterSubject === "department_title" ||
+        filterSubject === "place_of_origin" ||
+        filterSubject === "created_before" ||
+        filterSubject === "created_after"
+      );
+    });
+  }
+
   const [artists, setArtists] = useState([]);
   const [artworkTypes, setArtworkTypes] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [placesOfOrigin, setPlacesOfOrigin] = useState([]);
 
-  const [selectedFilter, setSelectedFilter] = useState("");
-  const [filterTerm, setFilterTerm] = useState("");
+  const [selectedFilter, setSelectedFilter] = useState(
+    getChicagoFilterSubject() || ""
+  );
+  const [filterTerm, setFilterTerm] = useState(
+    searchParams.get(getChicagoFilterSubject()) || ""
+  );
 
   const [showDropdown, setShowDropdown] = useState(true);
   const [loadingFilters, setLoadingFilters] = useState(true);
 
-  const searchParams = useSearchParams();
   const query = searchParams.get("q");
   const router = useRouter();
 
