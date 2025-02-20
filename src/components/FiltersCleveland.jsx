@@ -150,12 +150,6 @@ const FiltersCleveland = () => {
       });
   }, []);
 
-  function isDisabled() {
-    if (artist || department || type || createdBefore || createdAfter)
-      return false;
-    else return true;
-  }
-
   function handleReset() {
     setArtist("");
     setDepartment("");
@@ -206,51 +200,56 @@ const FiltersCleveland = () => {
       className="flex flex-col min-w-72 md:pr-5 md:mr-5 md:border-r"
       onSubmit={handleSubmit}
     >
+      <div className="flex justify-between">
+        <label htmlFor="artists" className="my-2">
+          Artist
+        </label>
+        <button
+          type="button"
+          onClick={() => setArtist("")}
+          className="text-xs text-gray-700 hover:text-black hover:underline"
+        >
+          Reset
+        </button>
+      </div>
       {showDropdown ? (
-        <>
-          <label htmlFor="artists" className="my-2">
-            Artist
-          </label>
-          <select
-            id="artists"
-            value={artist}
-            className="p-2"
-            onChange={(e) => {
-              setArtist(e.target.value);
-            }}
-          >
-            <option value="" disabled>
-              Select an Artist
+        <select
+          id="artists"
+          value={artist}
+          className="p-2"
+          onChange={(e) => {
+            setArtist(e.target.value);
+          }}
+        >
+          <option value="" disabled>
+            Select an Artist
+          </option>
+          {loadingArtists ? (
+            <option value="loading" disabled>
+              Loading Options...
             </option>
-            {loadingArtists ? (
-              <option value="loading" disabled>
-                Loading Options...
-              </option>
-            ) : (
-              artists.map((artist) => {
-                return (
-                  <option value={artist} key={artist}>
-                    {artist}
-                  </option>
-                );
-              })
-            )}
-          </select>
-        </>
+          ) : (
+            artists.map((artist) => {
+              return (
+                <option value={artist} key={artist}>
+                  {artist}
+                </option>
+              );
+            })
+          )}
+        </select>
       ) : (
-        <>
-          <p className="my-2">Artist</p>
-          <div className="flex gap-5 p-1 bg-white border rounded-sm">
-            <CiSearch className="text-3xl text-gray-500" />
-            <input
-              className="grow focus:outline-none"
-              type="search"
-              value={artist}
-              onChange={(e) => setArtist(e.target.value)}
-              placeholder="Artist"
-            />
-          </div>
-        </>
+        <div className="flex gap-5 p-1 bg-white border rounded-sm">
+          <CiSearch className="text-3xl text-gray-500" />
+          <input
+            id="artists"
+            className="grow focus:outline-none"
+            type="search"
+            value={artist}
+            onChange={(e) => setArtist(e.target.value)}
+            placeholder="Artist"
+          />
+        </div>
       )}
       {showDropdown ? (
         <p className="text-gray-600 text-xs text-center my-2">
@@ -260,6 +259,7 @@ const FiltersCleveland = () => {
             className="hover:underline"
             onClick={() => {
               setShowDropdown(!showDropdown);
+              setArtist("");
             }}
           >
             Input Manually
@@ -271,15 +271,25 @@ const FiltersCleveland = () => {
           className="text-gray-600 text-xs my-2 hover:underline"
           onClick={() => {
             setShowDropdown(!showDropdown);
+            setArtist("");
           }}
         >
           Show Dropdown List
         </button>
       )}
 
-      <label htmlFor="departments" className="my-2">
-        Department
-      </label>
+      <div className="flex justify-between">
+        <label htmlFor="departments" className="my-2">
+          Department
+        </label>
+        <button
+          type="button"
+          onClick={() => setDepartment("")}
+          className="text-xs text-gray-700 hover:text-black hover:underline"
+        >
+          Reset
+        </button>
+      </div>
       <select
         id="departments"
         value={department}
@@ -300,9 +310,18 @@ const FiltersCleveland = () => {
         })}
       </select>
 
-      <label htmlFor="types" className="my-2">
-        Artwork Type
-      </label>
+      <div className="flex justify-between">
+        <label htmlFor="types" className="my-2">
+          Artwork Type
+        </label>
+        <button
+          type="button"
+          onClick={() => setType("")}
+          className="text-xs text-gray-700 hover:text-black hover:underline"
+        >
+          Reset
+        </button>
+      </div>
       <select
         id="types"
         value={type}
@@ -324,6 +343,22 @@ const FiltersCleveland = () => {
       </select>
 
       <h3 className="my-2">Date</h3>
+      <div className="flex justify-between">
+        <button
+          type="button"
+          onClick={() => setCreatedAfter("")}
+          className="text-xs text-gray-700 hover:text-black hover:underline"
+        >
+          Reset
+        </button>
+        <button
+          type="button"
+          onClick={() => setCreatedBefore("")}
+          className="text-xs text-gray-700 hover:text-black hover:underline"
+        >
+          Reset
+        </button>
+      </div>
       <div className="flex justify-between">
         <input
           className={`p-2 ${
@@ -363,8 +398,7 @@ const FiltersCleveland = () => {
       <div className="flex">
         <button
           type="submit"
-          className="my-4 mx-auto py-2 px-4 bg-white border rounded-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-          disabled={isDisabled()}
+          className="my-4 mx-auto py-2 px-4 bg-white border rounded-sm hover:bg-gray-100"
         >
           Save
         </button>

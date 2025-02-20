@@ -182,6 +182,7 @@ const FiltersChicago = () => {
                 className="hover:underline"
                 onClick={() => {
                   setShowDropdown(!showDropdown);
+                  setFilterTerm("");
                 }}
               >
                 Input Manually
@@ -193,20 +194,32 @@ const FiltersChicago = () => {
               className="text-gray-600 text-xs my-2 hover:underline"
               onClick={() => {
                 setShowDropdown(!showDropdown);
+                setFilterTerm("");
               }}
             >
               Show Dropdown List
             </button>
           )}
-          <button
-            type="submit"
-            className="my-4 mx-auto py-2 px-4 bg-white border rounded-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={!filterTerm}
-          >
-            Save
-          </button>
         </>
       )}
+      <div className="flex">
+        <button
+          type="submit"
+          className="my-4 mx-auto py-2 px-3 bg-white border rounded-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          className="my-4 mx-auto py-2 px-4 bg-white border rounded-sm hover:bg-gray-100"
+          onClick={() => {
+            setSelectedFilter("");
+            setFilterTerm("");
+          }}
+        >
+          Reset
+        </button>
+      </div>
     </form>
   );
 };
