@@ -20,17 +20,24 @@ const ExhibitionCard = ({ exhibitionName }) => {
   }
 
   function handleDelete() {
-    setExhibitionArtworks((exhibitionArtworks) => {
-      const { [exhibitionName]: _, ...newExhibtionArtworks } =
-        exhibitionArtworks;
-      return newExhibtionArtworks;
-    });
+    const isConfirmed = window.confirm(
+      `Are you sure you want to delete Exhibition '${exhibitionName}'?`
+    );
+    if (isConfirmed) {
+      setExhibitionArtworks((exhibitionArtworks) => {
+        const { [exhibitionName]: _, ...newExhibtionArtworks } =
+          exhibitionArtworks;
+        return newExhibtionArtworks;
+      });
+    }
   }
 
   return (
     <div className="pt-1 pb-4 md:py-0 md:flex items-center justify-between bg-white my-8 rounded-3xl shadow-lg transition duration-100 ease-in-out hover:-translate-y-1">
       <Link href={`/exhibitions/${exhibitionName}`} className="flex-1">
-        <p className="md:text-left font-serif my-4 md:ml-8 text-2xl">{exhibitionName}</p>
+        <p className="md:text-left font-serif my-4 md:ml-8 text-2xl">
+          {exhibitionName}
+        </p>
       </Link>
       <div className="md:flex">
         <Link href={`/exhibitions/${exhibitionName}`}>

@@ -9,17 +9,20 @@ const ExhibitionArtworkCard = ({
   exhibition,
 }) => {
   function handleClick(e) {
-    const filteredExhibition = exhibitionArtworks[exhibition].filter(
-      (artwork) => {
-        return artwork.id !== Number(e.currentTarget.value);
-      }
-    );
-    setExhibitionArtworks((prevExhibitionArtworks) => {
-      return {
-        ...prevExhibitionArtworks,
-        [exhibition]: filteredExhibition,
-      };
-    });
+    const isConfirmed = window.confirm(`Are you sure you want to delete '${artwork.title}' from Exhibiton '${exhibition}'?`);
+    if (isConfirmed) {
+      const filteredExhibition = exhibitionArtworks[exhibition].filter(
+        (artwork) => {
+          return artwork.id !== Number(e.currentTarget.value);
+        }
+      );
+      setExhibitionArtworks((prevExhibitionArtworks) => {
+        return {
+          ...prevExhibitionArtworks,
+          [exhibition]: filteredExhibition,
+        };
+      });
+    }
   }
 
   return (
