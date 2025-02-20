@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import ArtworkCard from "@/components/ArtworkCard";
 import PaginationBar from "@/components/PaginationBar";
 import FiltersChicago from "@/components/FiltersChicago";
@@ -40,6 +41,11 @@ const ArtworkList = ({ artworks, error, isFiltered }) => {
         <p>{`No Artworks Found for Search '${searchParams.get("q")}'${
           isFiltered ? " or your Chosen Filters" : ""
         }`}</p>
+        <Link href={`/artworks/${apiSource}`}>
+          <button className="my-4 mx-auto py-2 px-3 font-semibold bg-white border rounded-sm hover:bg-gray-100">
+            Restart Search
+          </button>
+        </Link>
       </div>
     );
   } else if (Object.keys(error).length) {
@@ -75,7 +81,9 @@ const ArtworkList = ({ artworks, error, isFiltered }) => {
         </div>
         <div
           className={`${
-            showFilters ? "w-11/12 mx-auto" : "w-11/12 md:w-2/3 mx-auto"
+            showFilters
+              ? "w-11/12 mx-auto"
+              : "w-11/12 md:w-4/5 lg:w-2/3 mx-auto"
           }`}
         >
           <div className="md:flex">

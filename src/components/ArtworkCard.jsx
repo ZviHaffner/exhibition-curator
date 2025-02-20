@@ -34,15 +34,10 @@ const ArtworkCard = ({ artworks, artwork }) => {
     }
   }
 
-  function assignArtworkSrc() {
-    if (apiSource === "chicago") return "chicago";
-    if (apiSource === "cleveland") return "cleveland";
-  }
-
   return (
     <div className="md:flex items-center justify-between bg-white my-8 rounded-3xl shadow-lg transition duration-100 ease-in-out hover:-translate-y-1">
       <Link
-        href={`/artworks/${assignArtworkSrc()}/${artwork.id}`}
+        href={`/artworks/${apiSource}/${artwork.id}`}
         className="md:flex items-center"
       >
         <div className="flex h-48 md:size-32 md:mr-5 md:rounded-l-3xl bg-gray-50">
@@ -79,7 +74,6 @@ const ArtworkCard = ({ artworks, artwork }) => {
         artwork={artwork}
         getImgSrc={getImgSrc}
         getArtists={getArtists}
-        assignArtworkSrc={assignArtworkSrc}
       />
     </div>
   );

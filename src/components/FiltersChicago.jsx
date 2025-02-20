@@ -4,18 +4,37 @@ import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 
 const FiltersChicago = () => {
+  const searchParams = useSearchParams();
+  const paramsKeys = Array.from(searchParams.keys());
+
+  function getChicagoFilterSubject() {
+    return paramsKeys.find((filterSubject) => {
+      return (
+        filterSubject === "artist_title" ||
+        filterSubject === "artwork_type_title" ||
+        filterSubject === "department_title" ||
+        filterSubject === "place_of_origin" ||
+        filterSubject === "created_before" ||
+        filterSubject === "created_after"
+      );
+    });
+  }
+
   const [artists, setArtists] = useState([]);
   const [artworkTypes, setArtworkTypes] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [placesOfOrigin, setPlacesOfOrigin] = useState([]);
 
-  const [selectedFilter, setSelectedFilter] = useState("");
-  const [filterTerm, setFilterTerm] = useState("");
+  const [selectedFilter, setSelectedFilter] = useState(
+    getChicagoFilterSubject() || ""
+  );
+  const [filterTerm, setFilterTerm] = useState(
+    searchParams.get(getChicagoFilterSubject()) || ""
+  );
 
   const [showDropdown, setShowDropdown] = useState(true);
   const [loadingFilters, setLoadingFilters] = useState(true);
 
-  const searchParams = useSearchParams();
   const query = searchParams.get("q");
   const router = useRouter();
 
@@ -163,6 +182,7 @@ const FiltersChicago = () => {
                 className="hover:underline"
                 onClick={() => {
                   setShowDropdown(!showDropdown);
+                  setFilterTerm("");
                 }}
               >
                 Input Manually
@@ -174,20 +194,32 @@ const FiltersChicago = () => {
               className="text-gray-600 text-xs my-2 hover:underline"
               onClick={() => {
                 setShowDropdown(!showDropdown);
+                setFilterTerm("");
               }}
             >
               Show Dropdown List
             </button>
           )}
-          <button
-            type="submit"
-            className="my-4 mx-auto py-2 px-4 bg-white border rounded-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={!filterTerm}
-          >
-            Save
-          </button>
         </>
       )}
+      <div className="flex">
+        <button
+          type="submit"
+          className="my-4 mx-auto py-2 px-3 bg-white border rounded-sm hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          className="my-4 mx-auto py-2 px-4 bg-white border rounded-sm hover:bg-gray-100"
+          onClick={() => {
+            setSelectedFilter("");
+            setFilterTerm("");
+          }}
+        >
+          Reset
+        </button>
+      </div>
     </form>
   );
 };

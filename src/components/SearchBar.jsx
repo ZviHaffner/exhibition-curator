@@ -34,7 +34,6 @@ const SearchBar = () => {
                 cleveland: "Cleveland Museum of Art",
               }[apiSource]
             }`}
-            required
           />
         </div>
       </form>
