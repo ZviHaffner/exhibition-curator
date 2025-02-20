@@ -11,15 +11,18 @@ export default function ExhibitionArtworksProvider({ children }) {
     const savedArtworks = JSON.parse(
       localStorage.getItem("exhibitionArtworks")
     );
-    if (Object.keys(savedArtworks)?.length)
+    if (savedArtworks && Object.keys(savedArtworks).length) {
       setExhibitionArtworks(savedArtworks);
+    }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(
-      "exhibitionArtworks",
-      JSON.stringify(exhibitionArtworks)
-    );
+    if (exhibitionArtworks) {
+      localStorage.setItem(
+        "exhibitionArtworks",
+        JSON.stringify(exhibitionArtworks)
+      );
+    }
   }, [exhibitionArtworks]);
 
   return (
