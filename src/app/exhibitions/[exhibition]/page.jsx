@@ -11,7 +11,8 @@ const page = () => {
     ExhibitionArtworksContext
   );
 
-  const { exhibition } = useParams();
+  let { exhibition } = useParams();
+  exhibition = decodeURIComponent(exhibition);
 
   return (
     <div className="w-11/12 md:w-2/3 mx-auto text-center">

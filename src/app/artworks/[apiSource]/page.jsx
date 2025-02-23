@@ -82,7 +82,7 @@ const Search = () => {
       }
     } else if (query && !checkIfFilter()) {
       if (apiSource === "chicago") {
-        searchChicagoArtworks(query)
+        searchChicagoArtworks(query, paramsObject.page ? paramsObject.page : 1)
           .then((res) => setArtworks(res.data))
           .catch((err) => {
             setError(
@@ -179,7 +179,11 @@ const Search = () => {
       {loading ? (
         <LoadingSpinner />
       ) : (
-        <ArtworkList artworks={artworks} error={error} isFiltered={checkIfFilter()} />
+        <ArtworkList
+          artworks={artworks}
+          error={error}
+          isFiltered={checkIfFilter()}
+        />
       )}
     </div>
   );
